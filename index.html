@@ -1,0 +1,217 @@
+<html>
+
+<style>
+.mytables {
+ border-collapse: collapse;
+ margin: 1vh;
+}
+.mytables td {
+ border: 1px solid #ddd;
+ padding: 1vh;
+}
+#mycanvas {
+ border: 1px solid #ddd;
+ margin: 1vh;
+}
+</style>
+
+<table class='mytables'>
+ <tr>
+  <td>desc</td>
+  <td>range</td>
+  <td colspan='2'>Amy</td>
+  <td colspan='2'>Mark</td>
+ </tr>
+ <tr>
+  <td>ex</td>
+  <td>[1,255]</td>
+ 
+  <td><input class="myinputs ex_amy" type="range" min="1" max="255" value="20" id="input_range_ex_amy"></td>
+  <td><input class="myinputs ex_amy" type="number" min="1" max="255" value="20" id="input_number_ex_amy"></td>
+  
+  <td><input class="myinputs ex_mark" type="range" min="1" max="255" value="35" id="input_range_ex_mark"></td>
+  <td><input class="myinputs ex_mark" type="number" min="1" max="255" value="35" id="input_number_ex_mark"></td>
+
+ </tr>
+ 
+ <tr>
+  <td>ey</td>
+  <td>[1,255]</td>
+  
+  <td><input class="myinputs ey_amy" type="range" min="1" max="255" value="30" id="input_range_ey_amy"></td>
+  <td><input class="myinputs ey_amy" type="number" min="1" max="255" value="30" id="input_number_ey_amy"></td>
+  
+  <td><input class="myinputs ey_mark" type="range" min="1" max="255" value="22" id="input_range_ey_mark"></td>
+  <td><input class="myinputs ey_mark" type="number" min="1" max="255" value="22" id="input_number_ey_mark"></td>
+
+ </tr>
+ <tr>
+  <td>alpha</td>
+  <td>(0,1)</td>
+  
+  <td><input class="myinputs alpha_amy" type="range" step='0.01' min="0.01" max="0.99" value="0.30" id="input_range_alpha_amy"></td>
+  <td><input class="myinputs alpha_amy" type="number" step='0.01' min="0.01" max="0.99" value="0.30" id="input_number_alpha_amy"></td>
+  
+  <td><input class="myinputs alpha_mark" type="range" step='0.01' min="0.01" max="0.99" value="0.20" id="input_range_alpha_mark"></td>
+  <td><input class="myinputs alpha_mark" type="number" step='0.01' min="0.01" max="0.99" value="0.20" id="input_number_alpha_mark"></td>
+  
+ </tr>
+ <tr>
+  <td>beta</td>
+  <td>(0,1)</td>
+  
+  <td><input class="myinputs beta_amy" disabled type="range" step='0.01' min="0.01" max="0.99" value="0.70" id="input_range_beta_amy"></td>
+  <td><input class="myinputs beta_amy" disabled type="number" step='0.01' min="0.01" max="0.99" value="0.70" id="input_number_beta_amy"></td>
+  
+  <td><input class="myinputs beta_mark" disabled type="range" step='0.01' min="0.01" max="0.99" value="0.80" id="input_range_beta_mark"></td>
+  <td><input class="myinputs beta_mark" disabled type="number" step='0.01' min="0.01" max="0.99" value="0.80" id="input_number_beta_mark"></td>
+  
+ </tr>
+</table>
+
+<canvas id='mycanvas'></canvas>
+
+<script>
+
+window.onload = function() {
+  let amy = {
+   'ex': parseFloat(document.getElementById('input_number_ex_amy').value),
+   'ey': parseFloat(document.getElementById('input_number_ey_amy').value),
+   'alpha': parseFloat(document.getElementById('input_number_alpha_amy').value),
+   'beta': parseFloat(document.getElementById('input_number_beta_amy').value)
+  };
+  
+  let mark = {
+   'ex': parseFloat(document.getElementById('input_number_ex_mark').value),
+   'ey': parseFloat(document.getElementById('input_number_ey_mark').value),
+   'alpha': parseFloat(document.getElementById('input_number_alpha_mark').value),
+   'beta': parseFloat(document.getElementById('input_number_beta_mark').value)
+  };
+  
+  
+  updateEdgeWorthBox(amy, mark);
+}
+
+
+let myinputs = document.getElementsByClassName('myinputs');
+for (let i = 0; i < myinputs.length; i++) {
+ myinputs[i].addEventListener('input', function(e) {
+ 
+  let val = parseFloat(this.value);
+  let min = parseFloat(this.min);
+  let max = parseFloat(this.max);
+ 
+  e.stopPropagation();
+  //console.log('val : ' + val);
+  //console.log('min : ' + min);
+  //console.log('max : ' + max);
+  
+  // check min-max
+  if (val < min) {
+   val = min;
+  }
+  if (val > max) {
+   val = max;
+  }
+  
+  //console.log('val : ' + val);
+  //console.log('min : ' + min);
+  //console.log('max : ' + max);
+  
+  let input_class = this.classList.value.split(' ')[1];
+  let els = document.getElementsByClassName(input_class);
+  for (let j = 0; j < els.length; j++) {
+   els[j].value = val;
+  }
+  
+  // make sure the sum of alpha and beta is 1
+  if (this.classList.contains('alpha_amy')) {
+   document.getElementById('input_range_beta_amy').value = Math.floor((1-(Math.floor(val*100)/100))*100)/100;
+   document.getElementById('input_number_beta_amy').value = Math.floor((1-(Math.floor(val*100)/100))*100)/100;
+  }
+  if (this.classList.contains('alpha_mark')) {
+   document.getElementById('input_range_beta_mark').value = Math.floor((1-(Math.floor(val*100)/100))*100)/100;
+   document.getElementById('input_number_beta_mark').value = Math.floor((1-(Math.floor(val*100)/100))*100)/100;
+  }
+  
+  
+  // NOW GET ALL THE VALUES
+  let amy = {
+   'ex': parseFloat(document.getElementById('input_number_ex_amy').value),
+   'ey': parseFloat(document.getElementById('input_number_ey_amy').value),
+   'alpha': parseFloat(document.getElementById('input_number_alpha_amy').value),
+   'beta': parseFloat(document.getElementById('input_number_beta_amy').value)
+  };
+  
+  let mark = {
+   'ex': parseFloat(document.getElementById('input_number_ex_mark').value),
+   'ey': parseFloat(document.getElementById('input_number_ey_mark').value),
+   'alpha': parseFloat(document.getElementById('input_number_alpha_mark').value),
+   'beta': parseFloat(document.getElementById('input_number_beta_mark').value)
+  };
+  
+  
+  updateEdgeWorthBox(amy, mark);
+  
+  
+ });
+}
+
+
+
+
+function updateEdgeWorthBox(a, b) {
+ 
+ //console.log(a);
+ 
+ let c = document.getElementById('mycanvas');
+ let ctx = c.getContext('2d');
+ let scale = 10;
+
+ let w = scale*(a.ex + b.ex);
+ let h = scale*(a.ey + b.ey);
+ 
+ c.width = w;
+ c.height = h;
+
+ let u_a = a.ex**a.alpha * a.ey**(1-a.alpha);
+ let u_b = b.ex**b.alpha * b.ey**(1-b.alpha);
+
+ //console.log(u_a);
+ //console.log(u_b);
+
+ ctx.fillStyle = '#ddd'; 
+ for (let i = 0; i < w; i++) {
+
+  // draw u_a isoquant
+  let x_a = i/scale;
+  let y_a = (u_a / (x_a**a.alpha))**(1/(1-a.alpha));
+  ctx.beginPath();
+  ctx.arc(x_a*scale, h-y_a*scale, 1, 0, 2*Math.PI);
+  ctx.fill()
+ 
+  // draw u_b
+  let x_b = i/scale;
+  let y_b = (u_b / (x_b**b.alpha))**(1/(1-b.alpha));
+  ctx.beginPath();
+  ctx.arc(w-x_b*scale, y_b*scale, 1, 0, 2*Math.PI);
+  ctx.fill()
+
+ }
+ 
+ ctx.fillStyle = '#fc0'; 
+ ctx.beginPath();
+ ctx.arc(a.ex*scale, h-a.ey*scale, 5, 0, 2*Math.PI);
+ ctx.fill()
+
+}
+
+/*
+
+
+
+
+*/
+
+</script>
+</html>
