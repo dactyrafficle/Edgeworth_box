@@ -71,6 +71,8 @@
 
 <canvas id='mycanvas'></canvas>
 
+<script src='edgeworth.js'></script>
+
 <script>
 
 window.onload = function() {
@@ -159,59 +161,6 @@ for (let i = 0; i < myinputs.length; i++) {
 
 
 
-
-function updateEdgeWorthBox(a, b) {
- 
- //console.log(a);
- 
- let c = document.getElementById('mycanvas');
- let ctx = c.getContext('2d');
- let scale = 10;
-
- let w = scale*(a.ex + b.ex);
- let h = scale*(a.ey + b.ey);
- 
- c.width = w;
- c.height = h;
-
- let u_a = a.ex**a.alpha * a.ey**(1-a.alpha);
- let u_b = b.ex**b.alpha * b.ey**(1-b.alpha);
-
- //console.log(u_a);
- //console.log(u_b);
-
- ctx.fillStyle = '#ddd'; 
- for (let i = 0; i < w; i++) {
-
-  // draw u_a isoquant
-  let x_a = i/scale;
-  let y_a = (u_a / (x_a**a.alpha))**(1/(1-a.alpha));
-  ctx.beginPath();
-  ctx.arc(x_a*scale, h-y_a*scale, 1, 0, 2*Math.PI);
-  ctx.fill()
- 
-  // draw u_b
-  let x_b = i/scale;
-  let y_b = (u_b / (x_b**b.alpha))**(1/(1-b.alpha));
-  ctx.beginPath();
-  ctx.arc(w-x_b*scale, y_b*scale, 1, 0, 2*Math.PI);
-  ctx.fill()
-
- }
- 
- ctx.fillStyle = '#fc0'; 
- ctx.beginPath();
- ctx.arc(a.ex*scale, h-a.ey*scale, 5, 0, 2*Math.PI);
- ctx.fill()
-
-}
-
-/*
-
-
-
-
-*/
 
 </script>
 </html>
