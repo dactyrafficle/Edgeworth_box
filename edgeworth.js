@@ -12,13 +12,54 @@ function updateEdgeWorthBox(a, b) {
  
  c.width = w;
  c.height = h;
-
+ 
+ c.addEventListener('mousemove', function(e) {
+   let pixel = {
+     'x':e.offsetX,
+     'y':h-e.offsetY
+   }
+   let val = {
+     'x':pixel.x/scale,
+     'y':pixel.y/scale
+   }
+   console.log(val);
+ });
+ 
  let u_a = a.ex**a.alpha * a.ey**(1-a.alpha);
  let u_b = b.ex**b.alpha * b.ey**(1-b.alpha);
 
  // THE BUDGET LINE
  let px = (a.alpha*a.ey + b.alpha*b.ey) / ((1-b.alpha)*b.ex + (1-a.alpha)*a.ex)
- console.log(px);
+ //console.log(px);
+ 
+ 
+ // exchange points
+ // BUDGETS
+ a.budget = px*a.ex + a.ey;
+ b.budget = px*b.ex + b.ey;
+ let x = a.alpha*a.budget / px;
+ let y = (1-a.alpha)*a.budget / 1;
+ 
+ // THE NEW POINT
+ ctx.fillStyle = '#adc2eb99'; 
+ ctx.beginPath();
+ ctx.arc(x*scale, h-y*scale, 5, 0, 2*Math.PI);
+ //ctx.arc(w-(b.alpha*b.budget/px)*scale, ((1-b.alpha)*b.budget)*scale, 3, 0, 2*Math.PI);
+ ctx.fill()
+ ctx.fillStyle = '#adc2eb'; 
+ ctx.beginPath();
+ //ctx.arc(x*scale, h-y*scale, 7, 0, 2*Math.PI);
+ ctx.arc(w-(b.alpha*b.budget/px)*scale, ((1-b.alpha)*b.budget)*scale, 2, 0, 2*Math.PI);
+ ctx.fill()
+ // above 
+ 
+ ctx.strokeStyle = '#adc2eb';
+ ctx.beginPath();
+ ctx.moveTo(0, h - a.ey*scale - px*a.ex*scale);
+ ctx.lineTo(a.ex*scale, h-a.ey*scale);
+ ctx.lineTo(w, (h-a.ey*scale)+px*(w-a.ex*scale));
+ ctx.stroke();
+ 
 
  let dx = 2;
  ctx.strokeStyle = '#ddd';
@@ -55,6 +96,7 @@ function updateEdgeWorthBox(a, b) {
   //ctx.fill();
 
 
+    
   // COMPARE
   ctx.strokeStyle = '#fc05';
   if (i%5 === 0) {
@@ -68,7 +110,6 @@ function updateEdgeWorthBox(a, b) {
   
  }
 
- 
 
  // THE INITIAL ENDOWMENT 
  ctx.fillStyle = '#fc0'; 
