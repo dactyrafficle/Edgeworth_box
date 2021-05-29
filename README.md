@@ -12,3 +12,5 @@ supply is fixed as the total endowment for that good
 prices equilibrate on that basis
 
 let py = 1, so that we can solve for (px/py)
+
+https://dactyrafficle.github.io/Edgeworth_box/
