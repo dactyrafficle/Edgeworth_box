@@ -1,4 +1,32 @@
 
+let box = (function() {
+  
+ let c = document.createElement('canvas');
+ let ctx = c.getContext('2d');
+
+ let scale = 10;
+ 
+ let w = 500;
+ let h = 500;
+ 
+ return {
+   'getCanvas': function() {
+     return c;
+   },
+   'resizeCanvas': function() {
+     c.width = w;
+     c.height = h;
+   }
+ }
+  
+})();
+  
+
+
+
+
+
+
 function updateEdgeWorthBox(a, b) {
  
  //console.log(a);
