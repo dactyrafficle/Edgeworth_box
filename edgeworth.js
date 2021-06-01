@@ -4,7 +4,7 @@ let box = (function() {
  let c = document.createElement('canvas');
  let ctx = c.getContext('2d');
 
- let scale = 10;
+ let scale = 9;
  
  let w = 500;
  let h = 500;
@@ -19,14 +19,14 @@ let box = (function() {
  let y_optimal;
  
  let amy = {
-  'ex':20,
-  'ey':30,
+  'ex':40,
+  'ey':60,
   'alpha':0.30
  }
  
  let mark = {
-  'ex':35,
-  'ey':22,
+  'ex':60,
+  'ey':40,
   'alpha':0.20
  } 
  
@@ -56,8 +56,26 @@ let box = (function() {
    'returnInfobox': function() {
      return infobox;
    },
+   'updateAlphaAmy': function(alpha_) {
+     amy.alpha = alpha_;
+   },
+   'updateAlphaMark': function(alpha_) {
+     mark.alpha = alpha_;
+   },
+   'updateExAmy': function(ex_) {
+     amy.ex = ex_;
+   },
+   'updateExMark': function(ex_) {
+     mark.ex = ex_;
+   },
+   'updateEyAmy': function(ey_) {
+     amy.ey = ey_;
+   },
+   'updateEyMark': function(ey_) {
+     mark.ey = ey_;
+   },
    'clearCanvas': function() {
-     ctx.fillStyle = '#fff';
+     ctx.fillStyle = '#ffff';
      ctx.fillRect(0, 0, c.width, c.height);
      ctx.fill();
    },
@@ -178,12 +196,3 @@ let box = (function() {
   
 
 
-
-
-
-function updateEdgeWorthBox(a, b) {
- 
- 
-
- 
-};

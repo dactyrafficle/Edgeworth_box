@@ -12,6 +12,12 @@ html, body {
 #mycanvas {
  border: 1px solid #ddd;
 }
+.section {
+ vertical-align: top;
+ margin: 1vh;
+ padding: 1vh;
+ border: 1px solid #ddd;
+}
 .sub-section {
  display: inline-block;
  vertical-align: top;

@@ -7,62 +7,21 @@
 </head>
 
 <div class='sub-section'>
+
+<div class='section'>
+ <p> These 2 make trades along the budget line. </p>
+ <p> contract curve: 1. mrs_amy = mrs_mark [shown] 2. demand given price and income </p>
+</div>
+
 <table class='mytables'>
+ <tr>
+  <td colspan='6'>Parameters</td>
+ </tr>
  <tr>
   <td>desc</td>
   <td>range</td>
   <td colspan='2'>Amy</td>
   <td colspan='2'>Mark</td>
- </tr>
- <tr>
-  <td>ex</td>
-  <td>[1,255]</td>
- 
-  <td>
-   <input class="myinputs" type="range" min="1" max="100" value="20" id="input_range_ex_amy_abs"><br>
-   <input class="myinputs" type="range" min="1" max="100" value="20" id="input_range_ex_amy_pct">
-  </td>
-
-  <td>
-   <input class="myinputs" disabled type="number" min="1" max="100" value="20" id="input_number_ex_amy_abs"><br>
-   <input class="myinputs" disabled type="number" min="1" max="100" value="20" id="input_number_ex_amy_pct">
-  </td>
-  
-  <td>
-   <input class="myinputs" type="range" min="1" max="100" value="35" id="input_range_ex_mark_abs"><br>
-   <input class="myinputs" type="range" min="1" max="100" value="35" id="input_range_ex_mark_pct">
-  </td>
-  
-  <td>
-   <input class="myinputs" disabled type="number" min="1" max="100" value="35" id="input_number_ex_mark_abs"><br>
-   <input class="myinputs" disabled type="number" min="1" max="100" value="35" id="input_number_ex_mark_pct">
-  </td>
-
- </tr>
- 
- <tr>
-  <td>ey</td>
-  <td>[1,255]</td>
-  
-  <td>
-   <input class="myinputs" type="range" min="1" max="100" value="30" id="input_range_ey_amy_abs"><br>
-   <input class="myinputs" type="range" min="1" max="100" value="30" id="input_range_ey_amy_pct">
-  </td>
-  
-  <td>
-   <input class="myinputs" disabled type="number" min="1" max="100" value="30" id="input_number_ey_amy_abs"><br>
-   <input class="myinputs" disabled type="number" min="1" max="100" value="30" id="input_number_ey_amy_pct">
-  </td>
-  
-  <td>
-   <input class="myinputs" type="range" min="1" max="100" value="22" id="input_range_ey_mark_abs"><br>
-   <input class="myinputs" type="range" min="1" max="100" value="22" id="input_range_ey_mark_pct">
-  </td>
-  
-  <td>
-   <input class="myinputs" disabled type="number" min="1" max="255" value="22" id="input_number_ey_mark"><br>
-   <input class="myinputs" disabled type="number" min="1" max="255" value="22" id="input_number_ey_mark">
-  </td>
  </tr>
  
  <tr>
@@ -97,25 +56,68 @@
   <td><input class="myinputs" disabled type="number" step='0.01' min="0.01" max="0.99" value="0.80" id="input_number_beta_mark"></td>
   
  </tr>
-</table>
-</div>
 
-<p> amy: mu_x = \alpha (y/x)**(1-\alpha) </p>
-<p> mark: mu_y = (1-\alpha) * (x/y) ** \alpha </p>
-<p> mrs: = mu_x/mu_y = (\alpha / (1-\alpha)) * (y/x) </p>
-
-<div class='sub-section'>
- <p> contract curve: 1. mrs_amy = mrs_mark [shown] 2. demand given price and income </p>
- <p> examine the fact that both want y more than x, but mark really wants it. that informs the price. </p>
- <p> examine the path to the optimal point. </p>
- <p> show both sets of marginal utilities, unconstrained. </p>
- <p> mark gives amy $1 for 1 unit of y, amy uses that $1 to buy 1/px units of x. </p>
- <p> i always thot the budget line of allowable trades could be curves? </p>
+ <tr>
+  <td>ex</td>
+  <td>[1,100]</td>
  
- <p> amy can sell 1 unit of y for py, and she can take that py and spend it on py/px units of x, where each unit of x gives her mu_x, so the reason amy makes this trade is because so if (py/px)*mu_x > mu_y, then amy will make that trade. </p>
-</div>
+  <td>
+   <input class="myinputs" type="range" min="1" max="100" value="40" id="input_range_ex_amy_abs">
+  </td>
+
+  <td>
+   <input class="myinputs" disabled type="number" min="1" max="100" value="40" id="input_number_ex_amy_abs"><br>
+  </td>
+  
+  <td>
+   <input class="myinputs" type="range" min="1" max="100" value="60" id="input_range_ex_mark_abs">
+  </td>
+  
+  <td>
+   <input class="myinputs" disabled type="number" min="1" max="100" value="60" id="input_number_ex_mark_abs">
+  </td>
+ </tr>
+
+ 
+ <tr>
+  <td>ey</td>
+  <td>[1,100]</td>
+  
+  <td>
+   <input class="myinputs" type="range" min="1" max="100" value="60" id="input_range_ey_amy_abs">
+  </td>
+  
+  <td>
+   <input class="myinputs" disabled type="number" min="1" max="100" value="60" id="input_number_ey_amy_abs">
+  </td>
+  
+  <td>
+   <input class="myinputs" type="range" min="1" max="100" value="40" id="input_range_ey_mark_abs">
+  </td>
+  
+  <td>
+   <input class="myinputs" disabled type="number" min="1" max="100" value="40" id="input_number_ey_mark_abs">
+  </td>
+ </tr>
+ 
+ <tr>
+  <td>MU</td>
+  <td></td>
+  <td></td>
+  <td><span id='mu_x_amy'></span></td>
+  <td></td>
+  <td><span id='mu_x_mark'></span></td>
+ </tr>
+
+</table>
 
 <div class='sub-section' id='infobox-container'></div>
+
+</div>
+
+
+
+
 <div class='sub-section' id='canvas-container'></div>
 
 <script src='setup.js'></script>
