@@ -6,6 +6,7 @@
  <title>edgeworth!</title>
 </head>
 
+<div class='sub-section'>
 <table class='mytables'>
  <tr>
   <td>desc</td>
@@ -18,23 +19,23 @@
   <td>[1,255]</td>
  
   <td>
-   <input class="myinputs ex_amy" type="range" min="1" max="255" value="20" id="input_range_ex_amy"><br>
-   <input class="myinputs ex_amy" type="range" min="1" max="255" value="20" id="input_range_ex_amy_pct">
+   <input class="myinputs" type="range" min="1" max="100" value="20" id="input_range_ex_amy_abs"><br>
+   <input class="myinputs" type="range" min="1" max="100" value="20" id="input_range_ex_amy_pct">
+  </td>
+
+  <td>
+   <input class="myinputs" disabled type="number" min="1" max="100" value="20" id="input_number_ex_amy_abs"><br>
+   <input class="myinputs" disabled type="number" min="1" max="100" value="20" id="input_number_ex_amy_pct">
   </td>
   
   <td>
-   <input class="myinputs ex_amy" type="number" min="1" max="255" value="20" id="input_number_ex_amy"><br>
-   <input class="myinputs ex_amy" type="number" min="1" max="255" value="20" id="input_number_ex_amy_pct">
+   <input class="myinputs" type="range" min="1" max="100" value="35" id="input_range_ex_mark_abs"><br>
+   <input class="myinputs" type="range" min="1" max="100" value="35" id="input_range_ex_mark_pct">
   </td>
   
   <td>
-   <input class="myinputs ex_mark" type="range" min="1" max="255" value="35" id="input_range_ex_mark"><br>
-   <input class="myinputs ex_mark" type="range" min="1" max="255" value="35" id="input_range_ex_mark">
-  </td>
-  
-  <td>
-   <input class="myinputs ex_mark" type="number" min="1" max="255" value="35" id="input_number_ex_mark"><br>
-   <input class="myinputs ex_mark" type="number" min="1" max="255" value="35" id="input_number_ex_mark">
+   <input class="myinputs" disabled type="number" min="1" max="100" value="35" id="input_number_ex_mark_abs"><br>
+   <input class="myinputs" disabled type="number" min="1" max="100" value="35" id="input_number_ex_mark_pct">
   </td>
 
  </tr>
@@ -43,51 +44,83 @@
   <td>ey</td>
   <td>[1,255]</td>
   
-  <td><input class="myinputs ey_amy" type="range" min="1" max="255" value="30" id="input_range_ey_amy"></td>
-  <td><input class="myinputs ey_amy" type="number" min="1" max="255" value="30" id="input_number_ey_amy"></td>
+  <td>
+   <input class="myinputs" type="range" min="1" max="100" value="30" id="input_range_ey_amy_abs"><br>
+   <input class="myinputs" type="range" min="1" max="100" value="30" id="input_range_ey_amy_pct">
+  </td>
   
-  <td><input class="myinputs ey_mark" type="range" min="1" max="255" value="22" id="input_range_ey_mark"></td>
-  <td><input class="myinputs ey_mark" type="number" min="1" max="255" value="22" id="input_number_ey_mark"></td>
-
+  <td>
+   <input class="myinputs" disabled type="number" min="1" max="100" value="30" id="input_number_ey_amy_abs"><br>
+   <input class="myinputs" disabled type="number" min="1" max="100" value="30" id="input_number_ey_amy_pct">
+  </td>
+  
+  <td>
+   <input class="myinputs" type="range" min="1" max="100" value="22" id="input_range_ey_mark_abs"><br>
+   <input class="myinputs" type="range" min="1" max="100" value="22" id="input_range_ey_mark_pct">
+  </td>
+  
+  <td>
+   <input class="myinputs" disabled type="number" min="1" max="255" value="22" id="input_number_ey_mark"><br>
+   <input class="myinputs" disabled type="number" min="1" max="255" value="22" id="input_number_ey_mark">
+  </td>
  </tr>
+ 
  <tr>
   <td>alpha</td>
   <td>(0,1)</td>
   
-  <td><input class="myinputs alpha_amy" type="range" step='0.01' min="0.01" max="0.99" value="0.30" id="input_range_alpha_amy"></td>
-  <td><input class="myinputs alpha_amy" type="number" step='0.01' min="0.01" max="0.99" value="0.30" id="input_number_alpha_amy"></td>
+  <td>
+   <input class="myinputs" type="range" step='0.01' min="0.01" max="0.99" value="0.30" id="input_range_alpha_amy">
+  </td>
   
-  <td><input class="myinputs alpha_mark" type="range" step='0.01' min="0.01" max="0.99" value="0.20" id="input_range_alpha_mark"></td>
-  <td><input class="myinputs alpha_mark" type="number" step='0.01' min="0.01" max="0.99" value="0.20" id="input_number_alpha_mark"></td>
+  <td>
+   <input class="myinputs" disabled type="number" step='0.01' min="0.01" max="0.99" value="0.30" id="input_number_alpha_amy">
+  </td>
+  
+  <td>
+   <input class="myinputs" type="range" step='0.01' min="0.01" max="0.99" value="0.20" id="input_range_alpha_mark">
+  </td>
+  
+  <td>
+   <input class="myinputs" disabled type="number" step='0.01' min="0.01" max="0.99" value="0.20" id="input_number_alpha_mark">
+  </td>
   
  </tr>
  <tr>
   <td>beta</td>
   <td>(0,1)</td>
   
-  <td><input class="myinputs beta_amy" disabled type="range" step='0.01' min="0.01" max="0.99" value="0.70" id="input_range_beta_amy"></td>
-  <td><input class="myinputs beta_amy" disabled type="number" step='0.01' min="0.01" max="0.99" value="0.70" id="input_number_beta_amy"></td>
+  <td><input class="myinputs" disabled type="range" step='0.01' min="0.01" max="0.99" value="0.70" id="input_range_beta_amy"></td>
+  <td><input class="myinputs" disabled type="number" step='0.01' min="0.01" max="0.99" value="0.70" id="input_number_beta_amy"></td>
   
-  <td><input class="myinputs beta_mark" disabled type="range" step='0.01' min="0.01" max="0.99" value="0.80" id="input_range_beta_mark"></td>
-  <td><input class="myinputs beta_mark" disabled type="number" step='0.01' min="0.01" max="0.99" value="0.80" id="input_number_beta_mark"></td>
+  <td><input class="myinputs" disabled type="range" step='0.01' min="0.01" max="0.99" value="0.80" id="input_range_beta_mark"></td>
+  <td><input class="myinputs" disabled type="number" step='0.01' min="0.01" max="0.99" value="0.80" id="input_number_beta_mark"></td>
   
  </tr>
 </table>
-
-<div class='section2'>
- <canvas id='mycanvas'></canvas>
 </div>
 
-<div class='section2' id='canvas-container'></div>
+<p> amy: mu_x = \alpha (y/x)**(1-\alpha) </p>
+<p> mark: mu_y = (1-\alpha) * (x/y) ** \alpha </p>
+<p> mrs: = mu_x/mu_y = (\alpha / (1-\alpha)) * (y/x) </p>
+
+<div class='sub-section'>
+ <p> contract curve: 1. mrs_amy = mrs_mark [shown] 2. demand given price and income </p>
+ <p> examine the fact that both want y more than x, but mark really wants it. that informs the price. </p>
+ <p> examine the path to the optimal point. </p>
+ <p> show both sets of marginal utilities, unconstrained. </p>
+ <p> mark gives amy $1 for 1 unit of y, amy uses that $1 to buy 1/px units of x. </p>
+ <p> i always thot the budget line of allowable trades could be curves? </p>
+ 
+ <p> amy can sell 1 unit of y for py, and she can take that py and spend it on py/px units of x, where each unit of x gives her mu_x, so the reason amy makes this trade is because so if (py/px)*mu_x > mu_y, then amy will make that trade. </p>
+</div>
+
+<div class='sub-section' id='infobox-container'></div>
+<div class='sub-section' id='canvas-container'></div>
 
 <script src='setup.js'></script>
 <script src='edgeworth.js'></script>
 
-
-<script>
-
-
-
-</script>
+<script></script>
 
 </html>

@@ -9,37 +9,30 @@ let box = (function() {
  let w = 500;
  let h = 500;
  
- return {
-   'getCanvas': function() {
-     return c;
-   },
-   'resizeCanvas': function() {
-     c.width = w;
-     c.height = h;
-   }
+ let dx = 2;
+ let dy = 2;
+ 
+ let px;
+ let py = 1;
+ 
+ let x_optimal;
+ let y_optimal;
+ 
+ let amy = {
+  'ex':20,
+  'ey':30,
+  'alpha':0.30
  }
-  
-})();
-  
-
-
-
-
-
-
-function updateEdgeWorthBox(a, b) {
  
- //console.log(a);
+ let mark = {
+  'ex':35,
+  'ey':22,
+  'alpha':0.20
+ } 
  
- let c = document.getElementById('mycanvas');
- let ctx = c.getContext('2d');
- let scale = 10;
-
- let w = scale*(a.ex + b.ex);
- let h = scale*(a.ey + b.ey);
- 
- c.width = w;
- c.height = h;
+ let infobox = document.createElement('div');
+ infobox.style.width = '200px';
+ infobox.style.padding = '1vh';
  
  c.addEventListener('mousemove', function(e) {
    let pixel = {
@@ -50,99 +43,147 @@ function updateEdgeWorthBox(a, b) {
      'x':pixel.x/scale,
      'y':pixel.y/scale
    }
-   console.log(val);
+   let span = document.createElement('span');
+   span.innerHTML = '(' + Math.floor(val.x*100)/100 + ', ' + Math.floor(val.y*100)/100 + ')';
+   infobox.innerHTML = '';
+   infobox.appendChild(span);
  });
  
- let u_a = a.ex**a.alpha * a.ey**(1-a.alpha);
- let u_b = b.ex**b.alpha * b.ey**(1-b.alpha);
-
- // THE BUDGET LINE
- let px = (a.alpha*a.ey + b.alpha*b.ey) / ((1-b.alpha)*b.ex + (1-a.alpha)*a.ex)
- //console.log(px);
+ return {
+   'returnCanvas': function() {
+     return c;
+   },
+   'returnInfobox': function() {
+     return infobox;
+   },
+   'clearCanvas': function() {
+     ctx.fillStyle = '#fff';
+     ctx.fillRect(0, 0, c.width, c.height);
+     ctx.fill();
+   },
+   'resizeCanvas': function() {
+     w = (amy.ex + mark.ex)*scale;
+     h = (amy.ey + mark.ey)*scale;
+     c.width = w;
+     c.height = h;
+   },
+   'showInitialEndowment': function() {
+     ctx.fillStyle = '#fc0a'; 
+     ctx.beginPath();
+     ctx.arc(amy.ex*scale, h-amy.ey*scale, 5, 0, 2*Math.PI);
+     ctx.fill()
+   },
+   'updateUtilities': function() {
+     amy.u = amy.ex**amy.alpha*amy.ey**(1-amy.alpha);
+     mark.u = mark.ex**mark.alpha*mark.ey**(1-mark.alpha);
+   },
+   'updateIsoquants': function() {
+     
+     for (let i = 0; i < w; i += dx) {
+       
+       let x1_amy = i/scale;
+       let x2_amy = (i+dx)/scale;
+       let y1_amy = (amy.u / (x1_amy**amy.alpha))**(1/(1-amy.alpha));
+       let y2_amy = (amy.u / (x2_amy**amy.alpha))**(1/(1-amy.alpha));
+       
+       let x1_mark = (w-i)/scale;
+       let x2_mark = (w-i-dx)/scale;
+       let y1_mark = (mark.u / (x1_mark**mark.alpha))**(1/(1-mark.alpha));
+       let y2_mark = (mark.u / (x2_mark**mark.alpha))**(1/(1-mark.alpha));      
  
- 
- // exchange points
- // BUDGETS
- a.budget = px*a.ex + a.ey;
- b.budget = px*b.ex + b.ey;
- let x = a.alpha*a.budget / px;
- let y = (1-a.alpha)*a.budget / 1;
- 
- // THE NEW POINT
- ctx.fillStyle = '#adc2eb99'; 
- ctx.beginPath();
- ctx.arc(x*scale, h-y*scale, 5, 0, 2*Math.PI);
- //ctx.arc(w-(b.alpha*b.budget/px)*scale, ((1-b.alpha)*b.budget)*scale, 3, 0, 2*Math.PI);
- ctx.fill()
- ctx.fillStyle = '#adc2eb'; 
- ctx.beginPath();
- //ctx.arc(x*scale, h-y*scale, 7, 0, 2*Math.PI);
- ctx.arc(w-(b.alpha*b.budget/px)*scale, ((1-b.alpha)*b.budget)*scale, 2, 0, 2*Math.PI);
- ctx.fill()
- // above 
- 
- ctx.strokeStyle = '#adc2eb';
- ctx.beginPath();
- ctx.moveTo(0, h - a.ey*scale - px*a.ex*scale);
- ctx.lineTo(a.ex*scale, h-a.ey*scale);
- ctx.lineTo(w, (h-a.ey*scale)+px*(w-a.ex*scale));
- ctx.stroke();
- 
-
- let dx = 2;
- ctx.strokeStyle = '#ddd';
- ctx.fillStyle = '#ddd'; 
- for (let i = 0; i < w; i++) {
-
-  // draw u_a isoquant
-  let x_a = i/scale;
-  let y_a = (u_a / (x_a**a.alpha))**(1/(1-a.alpha));
-  let x_a2 = (i+dx)/scale;
-  let y_a2 = (u_a / (x_a2**a.alpha))**(1/(1-a.alpha));
-  ctx.strokeStyle = '#ddd';
-  ctx.beginPath();
-  //ctx.arc(x_a*scale, h-y_a*scale, 1, 0, 2*Math.PI);
-  ctx.moveTo(x_a*scale, h-y_a*scale);
-  ctx.lineTo(x_a2*scale, h-y_a2*scale);
-  ctx.stroke();
-  
-  //ctx.fill();
-  
-  
- 
-  // draw u_b
-  let x_b = (w-i)/scale;
-  let y_b = (u_b / (x_b**b.alpha))**(1/(1-b.alpha));
-  let x_b2 = (w-i-dx)/scale;
-  let y_b2 = (u_b / (x_b2**b.alpha))**(1/(1-b.alpha));
-  ctx.beginPath();
-  //ctx.arc(w-x_b*scale, y_b*scale, 1, 0, 2*Math.PI);
-  ctx.strokeStyle = '#ddd';
-  ctx.moveTo(w-x_b*scale, y_b*scale);
-  ctx.lineTo(w-x_b2*scale, y_b2*scale);
-  ctx.stroke();
-  //ctx.fill();
-
-
-    
-  // COMPARE
-  ctx.strokeStyle = '#fc05';
-  if (i%5 === 0) {
-   if ((h-y_a*scale) > y_b*scale) {
-    ctx.beginPath();
-    ctx.moveTo(x_a*scale, h-y_a*scale);
-    ctx.lineTo(w-x_b*scale, y_b*scale);
-    ctx.stroke();
+       ctx.strokeStyle = '#ddd';
+       
+       // ISOQUANT AMY
+       ctx.beginPath();
+       ctx.moveTo(x1_amy*scale, h-y1_amy*scale);
+       ctx.lineTo(x2_amy*scale, h-y2_amy*scale);
+       ctx.stroke();
+       
+       // ISOQUANT MARK
+       ctx.beginPath();
+       ctx.moveTo(w-x1_mark*scale, y1_mark*scale);
+       ctx.lineTo(w-x2_mark*scale, y2_mark*scale);
+       ctx.stroke();
+       
+       // WIN-WIN REGION
+       ctx.strokeStyle = '#fc05';
+       if (i%3 === 0) {
+        if ((h-y1_amy*scale) > (y1_mark*scale)) {
+         ctx.beginPath();
+         ctx.moveTo(x1_amy*scale, h-y1_amy*scale);
+         ctx.lineTo(x1_amy*scale, y1_mark*scale);
+         ctx.stroke();
+       }
+      }
+       
+     }
+     
+   },
+   'updatePrice': function() {
+     px = (amy.alpha*amy.ey + mark.alpha*mark.ey) / ((1-mark.alpha)*mark.ex + (1-amy.alpha)*amy.ex);
+   },
+   'updateBudgets': function() {
+     amy.budget = amy.ex*px+amy.ey;
+     mark.budget = mark.ex*px+mark.ey;
+   },
+   'showBudgetLine': function() {
+     ctx.strokeStyle = '#adc2eb';
+     ctx.beginPath();
+     ctx.moveTo(0, h-amy.ey*scale-px*amy.ex*scale);
+     ctx.lineTo(amy.ex*scale, h-amy.ey*scale);
+     ctx.lineTo(w, (h-amy.ey*scale)+px*(w-amy.ex*scale));
+     ctx.stroke();
+   },
+   'updateOptimalAllocation': function() {
+     x_optimal = amy.alpha*amy.budget / px;
+     y_optimal = (1-amy.alpha)*amy.budget / 1;
+   },
+   'showOptimalAllocation': function() {
+      
+     ctx.fillStyle = '#adc2eb99'; 
+     ctx.beginPath();
+     ctx.arc(x_optimal*scale, h-y_optimal*scale, 6, 0, 2*Math.PI);
+     ctx.fill()
+     
+     ctx.fillStyle = '#adc2eb'; 
+     ctx.beginPath();
+     ctx.arc(w-(mark.alpha*mark.budget/px)*scale, ((1-mark.alpha)*mark.budget)*scale, 3, 0, 2*Math.PI);
+     ctx.fill()
+   },
+   'showContractCurve': function() {
+     for (let i = 0; i < w; i += dx) {
+       
+       let x1 = i/scale;
+       let A1 = mark.alpha/(1-mark.alpha);
+       let K1 = A1/((amy.ex+mark.ex)-x1);
+       let S1 = x1*((1-amy.alpha)/amy.alpha);
+       let y1 = S1*(amy.ey+mark.ey)*K1/(1+S1*K1);
+       
+       let x2 = (i+dx)/scale;
+       let A2 = mark.alpha/(1-mark.alpha);
+       let K2 = A2/((amy.ex+mark.ex)-x2);
+       let S2 = x2*((1-amy.alpha)/amy.alpha);
+       let y2 = S2*(amy.ey+mark.ey)*K2/(1+S2*K2);
+       
+       ctx.strokeStyle = '#adc2eb99'; 
+       ctx.beginPath();
+       ctx.moveTo(x1*scale, h-y1*scale);
+       ctx.lineTo(x2*scale, h-y2*scale);
+       ctx.stroke();
+     }
    }
-  }
-  
  }
+  
+})();
+  
 
 
- // THE INITIAL ENDOWMENT 
- ctx.fillStyle = '#fc0'; 
- ctx.beginPath();
- ctx.arc(a.ex*scale, h-a.ey*scale, 5, 0, 2*Math.PI);
- ctx.fill()
 
-}
+
+
+function updateEdgeWorthBox(a, b) {
+ 
+ 
+
+ 
+};
