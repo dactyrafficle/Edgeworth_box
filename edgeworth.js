@@ -21,40 +21,36 @@ let box = (function() {
  let amy = {
   'ex':40,
   'ey':60,
-  'alpha':0.30
+  'alpha':0.30,
+  'u':0
  }
  
  let mark = {
   'ex':60,
   'ey':40,
-  'alpha':0.20
+  'alpha':0.20,
+  'u':0
  } 
  
- let infobox = document.createElement('div');
- infobox.style.width = '200px';
- infobox.style.padding = '1vh';
- 
- c.addEventListener('mousemove', function(e) {
-   let pixel = {
-     'x':e.offsetX,
-     'y':h-e.offsetY
-   }
-   let val = {
-     'x':pixel.x/scale,
-     'y':pixel.y/scale
-   }
-   let span = document.createElement('span');
-   span.innerHTML = '(' + Math.floor(val.x*100)/100 + ', ' + Math.floor(val.y*100)/100 + ')';
-   infobox.innerHTML = '';
-   infobox.appendChild(span);
- });
+
  
  return {
    'returnCanvas': function() {
+     c.id = 'mycanvas';
      return c;
    },
-   'returnInfobox': function() {
-     return infobox;
+   'returnData': function() {
+     return {
+      'Ex':amy.ex + mark.ex,
+      'Ey':amy.ey + mark.ey,
+      'scale':scale,
+      'h':h,
+      'w':w,
+      'px':px,
+      'py':1,
+      'amy':amy,
+      'mark':mark
+     };
    },
    'updateAlphaAmy': function(alpha_) {
      amy.alpha = alpha_;
@@ -73,6 +69,13 @@ let box = (function() {
    },
    'updateEyMark': function(ey_) {
      mark.ey = ey_;
+   },
+   'updateInitialAnalysis': function() {
+     return {
+       'u_amy': amy.ex**amy.alpha*amy.ey**(1-amy.alpha),
+       'u_mark': mark.ex**mark.alpha*mark.ey**(1-mark.alpha),
+       'mu_x_amy': amy.alpha*(amy.ey/amy.ex)**(1-amy.alpha)
+     };
    },
    'clearCanvas': function() {
      ctx.fillStyle = '#ffff';

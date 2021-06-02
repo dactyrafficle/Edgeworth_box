@@ -7,10 +7,18 @@ html, body {
 }
 .mytables td {
  border: 1px solid #ddd;
- padding: 1vh;
+ padding: 0.5vh;
 }
+.mytables td.mytables-container {
+ padding: 0;
+}
+
+
 #mycanvas {
- border: 1px solid #ddd;
+
+}
+#mycanvas:hover {
+ cursor: crosshair;
 }
 .section {
  vertical-align: top;
