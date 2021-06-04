@@ -34,6 +34,12 @@ html, body {
  padding: 1vh;
  border: 1px solid #ddd;
 }
+.sub-section3 {
+ display: inline-block;
+ vertical-align: top;
+ margin: 1vh;
+ border: 1px solid #ddd;
+}
 .myinputs {
  margin: 0.5vh;
 }
