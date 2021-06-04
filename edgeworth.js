@@ -4,10 +4,10 @@ let box = (function() {
  let c = document.createElement('canvas');
  let ctx = c.getContext('2d');
 
- let scale = 9;
+ let scale = 5; // default
  
- let w = 500;
- let h = 500;
+ let w = 100;  // default
+ let h = 100;  // default
  
  let dx = 2;
  let dy = 2;
@@ -48,6 +48,9 @@ let box = (function() {
    'returnCanvas': function() {
      c.id = 'mycanvas';
      return c;
+   },
+   'updateScale': function(scale_) {
+     scale = scale_;
    },
    'returnData': function() {
      return {

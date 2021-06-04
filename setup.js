@@ -57,12 +57,38 @@ function updateCurrentInfoBox(e) {
 }
 
 window.onload = function() {
+  
+  let blurb = document.getElementById('blurb');
+  blurb.style.width = document.getElementById('parameter-table').clientWidth; // or offsetWidth
+  
+  let infoboxContainer = document.getElementById('infobox-container');
+  let canvas_width = window.innerWidth - infoboxContainer.getBoundingClientRect().right;
 
- let blurb = document.getElementById('blurb');
- blurb.style.width = document.getElementById('parameter-table').clientWidth; // or offsetWidth
- console.log(document.getElementById('parameter-table').clientWidth); 
- console.log(blurb.style.width);
+  if (canvas_width > window.innerHeight) {
+    canvas_width = window.innerHeight;
+  }
+  
+  box.updateScale(canvas_width/120);
+  box.resizeCanvas();
+  updateEdgeworthBox();
+  updateInfoBox();
 
+  window.onresize = function(e) {
+    
+    blurb.style.width = document.getElementById('parameter-table').clientWidth;
+    canvas_width = window.innerWidth - infoboxContainer.getBoundingClientRect().right;
+    console.log(canvas_width);
+    
+    if (canvas_width > window.innerHeight) {
+      canvas_width = window.innerHeight;
+    }
+  
+    box.updateScale(canvas_width/120);
+    box.resizeCanvas();
+    updateEdgeworthBox();
+    updateInfoBox();
+    
+  }
 
   let canvas_container = document.getElementById('canvas-container');
   let c = box.returnCanvas();
@@ -70,15 +96,8 @@ window.onload = function() {
 
   c.addEventListener('mousemove', function(e) {
     updateCurrentInfoBox(e);
-    
-
   });
 
-  
-  box.resizeCanvas();
-  updateEdgeworthBox();
-  updateInfoBox();
-  
   input_range_alpha_amy.addEventListener('input', function(e) {
     let val = constrainInputValue(this);
     input_number_alpha_amy.value = val;
