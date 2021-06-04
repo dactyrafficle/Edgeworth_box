@@ -1,11 +1,33 @@
 
 function updateInfoBox() {
+  
  let data = box.returnData();
+ 
  val_initial_amy.innerHTML = '(' + data.amy.ex + ', ' + data.amy.ey + ')';
  val_initial_mark.innerHTML = '(' + data.mark.ex + ', ' + data.mark.ey + ')';
  
  u_initial_amy.innerHTML = Math.floor(data.amy.u*100)/100;
  u_initial_mark.innerHTML = Math.floor(data.mark.u*100)/100;
+ 
+ mu_x_initial_amy.innerHTML = Math.floor(data.amy.mu.x*100)/100;
+ mu_y_initial_amy.innerHTML = Math.floor(data.amy.mu.y*100)/100;
+ mu_x_initial_mark.innerHTML = Math.floor(data.mark.mu.x*100)/100;
+ mu_y_initial_mark.innerHTML = Math.floor(data.mark.mu.y*100)/100;
+ 
+ mrs_initial_amy.innerHTML = Math.floor(data.amy.mrs*100)/100;
+ mrs_initial_mark.innerHTML = Math.floor(data.mark.mrs*100)/100;
+ 
+ 
+ u_per_dollar_on_x_initial_amy.innerHTML = Math.floor(data.amy.mu.x/data.px*100)/100;
+ u_per_dollar_on_y_initial_amy.innerHTML = Math.floor(data.amy.mu.y/data.py*100)/100;
+ u_per_dollar_on_x_initial_mark.innerHTML = Math.floor(data.mark.mu.x/data.px*100)/100;
+ u_per_dollar_on_y_initial_mark.innerHTML = Math.floor(data.mark.mu.y/data.py*100)/100;
+ 
+ $_per_unit_on_x_initial_amy.innerHTML = Math.floor(data.px/data.amy.mu.x*100)/100;
+ $_per_unit_on_y_initial_amy.innerHTML = Math.floor(data.py/data.amy.mu.y*100)/100;
+ $_per_unit_on_x_initial_mark.innerHTML = Math.floor(data.px/data.mark.mu.x*100)/100;
+ $_per_unit_on_y_initial_mark.innerHTML = Math.floor(data.py/data.mark.mu.y*100)/100;
+ 
 }
 
 function updateCurrentInfoBox(e) {
@@ -35,6 +57,12 @@ function updateCurrentInfoBox(e) {
 }
 
 window.onload = function() {
+
+ let blurb = document.getElementById('blurb');
+ blurb.style.width = document.getElementById('parameter-table').clientWidth; // or offsetWidth
+ console.log(document.getElementById('parameter-table').clientWidth); 
+ console.log(blurb.style.width);
+
 
   let canvas_container = document.getElementById('canvas-container');
   let c = box.returnCanvas();

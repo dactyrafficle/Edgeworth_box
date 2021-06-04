@@ -3,11 +3,12 @@ html, body {
 }
 .mytables {
  border-collapse: collapse;
- margin: 1vh;
+ margin-top: 1vh;
 }
 .mytables td {
  border: 1px solid #ddd;
  padding: 0.5vh;
+
 }
 .mytables td.mytables-container {
  padding: 0;
@@ -22,7 +23,7 @@ html, body {
 }
 .section {
  vertical-align: top;
- margin: 1vh;
+
  padding: 1vh;
  border: 1px solid #ddd;
 }
@@ -30,8 +31,17 @@ html, body {
  display: inline-block;
  vertical-align: top;
  margin: 1vh;
+ padding: 1vh;
  border: 1px solid #ddd;
 }
 .myinputs {
  margin: 0.5vh;
+}
+.inline-code {
+ font-family: monospace;
+ background-color: #eee;
+ padding: 0.25vh 0.5vh;
+}
+.section p {
+
 }

@@ -8,14 +8,30 @@
 
 <div class='sub-section'>
 
+<div id='blurb'>
 <div class='section'>
- <p> These 2 make trades along the budget line</p>
- <p> Each forms its own demand function. The sum equals market demand.</p>
- <p> Market supply is the total market endowment. Solving it gives us price. </p>
- <p> contract curve: 1. mrs_amy = mrs_mark [shown] 2. demand given price and income </p>
+ <p> Each person forms its own demand function. The sum equals market demand. Market supply is the total market endowment. Solving it gives us price and thus the budget line. </p>
+ <p> These 2 make trades along the budget line. At a given point, <span class='inline-code'>mu.x/px</span> reports the amount of utility a person can buy for $1.</p>
+ <p>If <span class='inline-code'>mu.x/px</span> &gt; <span class='inline-code'>mu.y/px</span>, it means that $1 spent on <span class='inline-code'>x</span> will provide more utility than $1 spent on <span class='inline-code'>y</span>.<p>
+ <p> Such a person will probably want to sell <span class='inline-code'>k</span> units of <span class='inline-code'>y</span>, receive <span class='inline-code'>k&middot;py</span> money and purchase <span class='inline-code'>k&middot;py/px</span> units of <span class='inline-code'>x</span>.</p>
+ <p> The trade cost is <span class='inline-code'>k&middot;mu.y</span> utility, but the gain is <span class='inline-code'>k&middot;(py/px)&middot;mu.x</span> utility.<p>
+ <p> The contract curve is where <span class='inline-code'>amy.mrs</span> = <span class='inline-code'>mark.mrs</span> </p>
+
+ <!--
+ <p style='border-bottom: 1px solid #999'></p>
+ <p> Imagine you have 2 piles of things, but only care about the total number of things. </p>
+ <p> One pile has 300 blue things, which each cost $3.</p>
+ <p> The other pile has 200 red things and they cost $9. </p>
+ <p> So initially you have (300, 200) </p>
+ <p> But you can sell 1 red thing, receive $9, and buy 3 blue things. <p>
+ <p> And your allocation would be (303, 199) </p>
+ <p> another. at the given price, whats the change in u for making an incremental exchange along the budget line? </p>
+ 
+  -->
+</div>
 </div>
 
-<table class='mytables'>
+<table class='mytables' id='parameter-table'>
  <tr>
   <td colspan='6'>Parameters</td>
  </tr>
@@ -61,44 +77,44 @@
 
  <tr>
   <td>ex</td>
-  <td>[1,100]</td>
+  <td>[1,99]</td>
  
   <td>
-   <input class="myinputs" type="range" min="1" max="100" value="40" id="input_range_ex_amy_abs">
+   <input class="myinputs" type="range" min="1" max="99" value="40" id="input_range_ex_amy_abs">
   </td>
 
   <td>
-   <input class="myinputs" disabled type="number" min="1" max="100" value="40" id="input_number_ex_amy_abs"><br>
+   <input class="myinputs" disabled type="number" min="1" max="99" value="40" id="input_number_ex_amy_abs"><br>
   </td>
   
   <td>
-   <input class="myinputs" type="range" min="1" max="100" value="60" id="input_range_ex_mark_abs">
+   <input class="myinputs" type="range" min="1" max="99" value="60" id="input_range_ex_mark_abs">
   </td>
   
   <td>
-   <input class="myinputs" disabled type="number" min="1" max="100" value="60" id="input_number_ex_mark_abs">
+   <input class="myinputs" disabled type="number" min="1" max="99" value="60" id="input_number_ex_mark_abs">
   </td>
  </tr>
 
  
  <tr>
   <td>ey</td>
-  <td>[1,100]</td>
+  <td>[1,99]</td>
   
   <td>
-   <input class="myinputs" type="range" min="1" max="100" value="60" id="input_range_ey_amy_abs">
+   <input class="myinputs" type="range" min="1" max="99" value="60" id="input_range_ey_amy_abs">
   </td>
   
   <td>
-   <input class="myinputs" disabled type="number" min="1" max="100" value="60" id="input_number_ey_amy_abs">
+   <input class="myinputs" disabled type="number" min="1" max="99" value="60" id="input_number_ey_amy_abs">
   </td>
   
   <td>
-   <input class="myinputs" type="range" min="1" max="100" value="40" id="input_range_ey_mark_abs">
+   <input class="myinputs" type="range" min="1" max="99" value="40" id="input_range_ey_mark_abs">
   </td>
   
   <td>
-   <input class="myinputs" disabled type="number" min="1" max="100" value="40" id="input_number_ey_mark_abs">
+   <input class="myinputs" disabled type="number" min="1" max="99" value="40" id="input_number_ey_mark_abs">
   </td>
  </tr>
 </table> 
@@ -108,6 +124,7 @@
  
  <tr>
   <td></td>
+  <td></td>
   <td>Initial Point</td>
   <td>Optimal Point</td>
   <td>Current Point</td>
@@ -115,8 +132,8 @@
  
  <tr>
   <td><strong>x</strong> = [x y]</td>
-  <td>Amy : <span id='val_initial_amy'></span><br>
-  Mark : <span id='val_initial_mark'></span></td>
+  <td>Amy : <br> Mark : </td>
+  <td><span id='val_initial_amy'></span><br><span id='val_initial_mark'></span></td>
   <td></td>
   <td>Amy : <span id='val_current_amy'></span><br>
   Mark : <span id='val_current_mark'></td>
@@ -125,8 +142,8 @@
 
  <tr>
   <td>u(<strong>x</strong>)</td>
-  <td>Amy : <span id='u_initial_amy'></span><br>
-  Mark : <span id='u_initial_mark'></span></td>
+  <td>Amy : <br> Mark : </td>
+  <td><span id='u_initial_amy'></span><br><span id='u_initial_mark'></span></td>
   <td></td>
   <td>Amy : <span id='u_current_amy'></span><br>
   Mark : <span id='u_current_mark'></span></td>
@@ -134,14 +151,27 @@
  
  <tr>
   <td>&nabla;u</td>
-  <td></td>
+  <td>Amy : <br> Mark : </td>
+  <td>
+   <span id='mu_x_initial_amy'></span> - <span id='mu_y_initial_amy'></span><br>
+   <span id='mu_x_initial_mark'></span> - <span id='mu_y_initial_mark'></span>
+  </td>
   <td></td>
   <td></td>
 
  </tr>
  
  <tr>
+  <td>mrs</td>
+  <td>Amy : <br> Mark : </td>
+  <td><span id='mrs_initial_amy'></span><br><span id='mrs_initial_mark'></span></td>
+  <td></td>
+  <td></td>
+ </tr>
+ 
+ <tr>
   <td><strong>p</strong> = [p<sub>x</sub> p<sub>y</sub>] </td>
+  <td>Amy : <br> Mark : </td>
   <td></td>
   <td></td>
   <td></td>
@@ -149,28 +179,28 @@
  
  <tr>
   <td>&nabla;u &middot; <strong>p<sup>T</sup></strong></td>
-  <td></td>
+  <td>Amy : <br> Mark : </td>
+  <td>
+   <span id='u_per_dollar_on_x_initial_amy'></span> - <span id='u_per_dollar_on_y_initial_amy'></span><br>
+   <span id='u_per_dollar_on_x_initial_mark'></span> - <span id='u_per_dollar_on_y_initial_mark'></span>
+  </td>
   <td></td>
   <td></td>
  </tr>
- 
  
  <tr>
-  <td>mrs</td>
-  <td></td>
+  <td>$/utility</td>
+  <td>Amy : <br> Mark : </td>
+  <td>
+   <span id='$_per_unit_on_x_initial_amy'></span> - <span id='$_per_unit_on_y_initial_amy'></span><br>
+   <span id='$_per_unit_on_x_initial_mark'></span> - <span id='$_per_unit_on_y_initial_mark'></span>
+  </td>
   <td></td>
   <td></td>
  </tr>
- 
-
 </table>
 
-
-
 </div>
-
-
-
 
 <div class='sub-section' id='canvas-container'></div>
 

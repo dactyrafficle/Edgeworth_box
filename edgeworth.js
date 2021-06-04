@@ -22,14 +22,24 @@ let box = (function() {
   'ex':40,
   'ey':60,
   'alpha':0.30,
-  'u':0
+  'u':0,
+  'mu':{
+    'x':0,
+    'y':0
+  },
+  'mrs':0
  }
  
  let mark = {
   'ex':60,
   'ey':40,
   'alpha':0.20,
-  'u':0
+  'u':0,
+  'mu':{
+    'x':0,
+    'y':0
+  },
+  'mrs':0
  } 
  
 
@@ -97,6 +107,14 @@ let box = (function() {
    'updateUtilities': function() {
      amy.u = amy.ex**amy.alpha*amy.ey**(1-amy.alpha);
      mark.u = mark.ex**mark.alpha*mark.ey**(1-mark.alpha);
+     
+     amy.mu.x = amy.alpha*(amy.ey/amy.ex)**(1-amy.alpha);
+     amy.mu.y = (1-amy.alpha)*(amy.ex/amy.ey)**amy.alpha;
+     amy.mrs = amy.mu.x/amy.mu.y;
+     mark.mu.x = mark.alpha*(mark.ey/mark.ex)**(1-mark.alpha);
+     mark.mu.y = (1-mark.alpha)*(mark.ex/mark.ey)**mark.alpha;
+     mark.mrs = mark.mu.x/mark.mu.y;
+     
    },
    'updateIsoquants': function() {
      
