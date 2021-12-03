@@ -124,9 +124,7 @@ function update_box() {
   /* add the price lines */
   
   /* add the regional shading */
-  
-  
-  
+
   
 }
 
@@ -396,12 +394,12 @@ window.onload = function() {
     } else {
   
     params[1].a.alpha = parseFloat(input_a_alpha.value);
-    params[1].a.beta = parseFloat(input_a_beta.value);
+    params[1].a.beta = 1-parseFloat(input_a_alpha.value);
     params[1].a.x = params[1].a.x_pct * (parseFloat(input_a_x.value)+parseFloat(input_b_x.value));
     params[1].a.y = params[1].a.y_pct * (parseFloat(input_a_y.value)+parseFloat(input_b_y.value));
     
     params[1].b.alpha = parseFloat(input_b_alpha.value);
-    params[1].b.beta = parseFloat(input_b_beta.value);
+    params[1].b.beta = 1-parseFloat(input_b_alpha.value);
     params[1].b.x = params[1].b.x_pct * (parseFloat(input_a_x.value)+parseFloat(input_b_x.value));
     params[1].b.y = params[1].b.y_pct * (parseFloat(input_a_y.value)+parseFloat(input_b_y.value));
 
