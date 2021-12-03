@@ -1,63 +1,204 @@
 
-function updateInfoBox() {
+let input_a_alpha;
+let input_b_alpha;
+let input_a_beta;
+let input_b_beta;
+let input_a_x;
+let input_b_x;
+let input_a_y;
+let input_b_y;
+
+
+let points = [];
+let params = [];
+
+let box, canvas, container;
+
+let canvasIsClicked = false;
+
+function update_table(point) {
+ 
+  // ALLOCATIONS, CURRENT
+  document.getElementById('current-allocation-a-x-' + point.id).innerHTML = (point.actual.a.allocation.x).toFixed(3);
+  document.getElementById('current-allocation-a-y-' + point.id).innerHTML = (point.actual.a.allocation.y).toFixed(3);   
+  document.getElementById('current-allocation-b-x-' + point.id).innerHTML = (point.actual.b.allocation.x).toFixed(3);    
+  document.getElementById('current-allocation-b-y-' + point.id).innerHTML = (point.actual.b.allocation.y).toFixed(3);
   
- let data = box.returnData();
- 
- val_initial_amy.innerHTML = '(' + data.amy.ex + ', ' + data.amy.ey + ')';
- val_initial_mark.innerHTML = '(' + data.mark.ex + ', ' + data.mark.ey + ')';
- 
- u_initial_amy.innerHTML = Math.floor(data.amy.u*100)/100;
- u_initial_mark.innerHTML = Math.floor(data.mark.u*100)/100;
- 
- mu_x_initial_amy.innerHTML = Math.floor(data.amy.mu.x*100)/100;
- mu_y_initial_amy.innerHTML = Math.floor(data.amy.mu.y*100)/100;
- mu_x_initial_mark.innerHTML = Math.floor(data.mark.mu.x*100)/100;
- mu_y_initial_mark.innerHTML = Math.floor(data.mark.mu.y*100)/100;
- 
- mrs_initial_amy.innerHTML = Math.floor(data.amy.mrs*100)/100;
- mrs_initial_mark.innerHTML = Math.floor(data.mark.mrs*100)/100;
- 
- 
- u_per_dollar_on_x_initial_amy.innerHTML = Math.floor(data.amy.mu.x/data.px*100)/100;
- u_per_dollar_on_y_initial_amy.innerHTML = Math.floor(data.amy.mu.y/data.py*100)/100;
- u_per_dollar_on_x_initial_mark.innerHTML = Math.floor(data.mark.mu.x/data.px*100)/100;
- u_per_dollar_on_y_initial_mark.innerHTML = Math.floor(data.mark.mu.y/data.py*100)/100;
- 
- $_per_unit_on_x_initial_amy.innerHTML = Math.floor(data.px/data.amy.mu.x*100)/100;
- $_per_unit_on_y_initial_amy.innerHTML = Math.floor(data.py/data.amy.mu.y*100)/100;
- $_per_unit_on_x_initial_mark.innerHTML = Math.floor(data.px/data.mark.mu.x*100)/100;
- $_per_unit_on_y_initial_mark.innerHTML = Math.floor(data.py/data.mark.mu.y*100)/100;
- 
+  // ALLOCATIONS, OPTIMAL
+  document.getElementById('optimal-allocation-a-x-' + point.id).innerHTML = (point.optimal.a.allocation.x).toFixed(3);
+  document.getElementById('optimal-allocation-a-y-' + point.id).innerHTML = (point.optimal.a.allocation.y).toFixed(3);   
+  document.getElementById('optimal-allocation-b-x-' + point.id).innerHTML = (point.optimal.b.allocation.x).toFixed(3);    
+  document.getElementById('optimal-allocation-b-y-' + point.id).innerHTML = (point.optimal.b.allocation.y).toFixed(3);
+
+  // BUDGET, CURRENT
+  document.getElementById('current-budget-a-' + point.id).innerHTML = (point.actual.a.budget).toFixed(4);
+  document.getElementById('current-budget-b-' + point.id).innerHTML = (point.actual.b.budget).toFixed(4);
+  
+  // BUDGET, OPTIMAL
+  document.getElementById('optimal-budget-a-' + point.id).innerHTML = (point.optimal.a.budget).toFixed(4);
+  document.getElementById('optimal-budget-b-' + point.id).innerHTML = (point.optimal.b.budget).toFixed(4);
+
+  // UTILITY, CURRENT
+  document.getElementById('current-utility-a-' + point.id).innerHTML = (point.actual.a.utility).toFixed(4);
+  document.getElementById('current-utility-b-' + point.id).innerHTML = (point.actual.b.utility).toFixed(4);
+  
+  // UTILITY, OPTIMAL
+  document.getElementById('optimal-utility-a-' + point.id).innerHTML = (point.optimal.a.utility).toFixed(4);
+  document.getElementById('optimal-utility-b-' + point.id).innerHTML = (point.optimal.b.utility).toFixed(4);
+  
+  // MU, CURRENT
+  document.getElementById('current-mu-a-x-' + point.id).innerHTML = (point.actual.a.mu.x).toFixed(3);
+  document.getElementById('current-mu-a-y-' + point.id).innerHTML = (point.actual.a.mu.y).toFixed(3);   
+  document.getElementById('current-mu-b-x-' + point.id).innerHTML = (point.actual.b.mu.x).toFixed(3);    
+  document.getElementById('current-mu-b-y-' + point.id).innerHTML = (point.actual.b.mu.y).toFixed(3);
+  
+  // MU, OPTIMAL
+  document.getElementById('optimal-mu-a-x-' + point.id).innerHTML = (point.optimal.a.mu.x).toFixed(3);
+  document.getElementById('optimal-mu-a-y-' + point.id).innerHTML = (point.optimal.a.mu.y).toFixed(3);   
+  document.getElementById('optimal-mu-b-x-' + point.id).innerHTML = (point.optimal.b.mu.x).toFixed(3);    
+  document.getElementById('optimal-mu-b-y-' + point.id).innerHTML = (point.optimal.b.mu.y).toFixed(3);
+
+  // MRS, CURRENT
+  document.getElementById('current-mrs-a-xy-' + point.id).innerHTML = (point.actual.a.mrs.xy).toFixed(3);
+  document.getElementById('current-mrs-a-yx-' + point.id).innerHTML = (point.actual.a.mrs.yx).toFixed(3);   
+  document.getElementById('current-mrs-b-xy-' + point.id).innerHTML = (point.actual.b.mrs.xy).toFixed(3);    
+  document.getElementById('current-mrs-b-yx-' + point.id).innerHTML = (point.actual.b.mrs.yx).toFixed(3);
+  
+  // MRS, OPTIMAL
+  document.getElementById('optimal-mrs-a-xy-' + point.id).innerHTML = (point.optimal.a.mrs.xy).toFixed(3);
+  document.getElementById('optimal-mrs-a-yx-' + point.id).innerHTML = (point.optimal.a.mrs.yx).toFixed(3);   
+  document.getElementById('optimal-mrs-b-xy-' + point.id).innerHTML = (point.optimal.b.mrs.xy).toFixed(3);    
+  document.getElementById('optimal-mrs-b-yx-' + point.id).innerHTML = (point.optimal.b.mrs.yx).toFixed(3);
+
+  // PRICE, X
+  document.getElementById('price-x-' + point.id).innerHTML = (point.system.price.x).toFixed(3);
+
+  // MU/PRICE, CURRENT
+  document.getElementById('current-mu-price-a-x-' + point.id).innerHTML = (point.actual.a.mu_per_dollar.x).toFixed(3);
+  document.getElementById('current-mu-price-a-y-' + point.id).innerHTML = (point.actual.a.mu_per_dollar.y).toFixed(3);   
+  document.getElementById('current-mu-price-b-x-' + point.id).innerHTML = (point.actual.b.mu_per_dollar.x).toFixed(3);    
+  document.getElementById('current-mu-price-b-y-' + point.id).innerHTML = (point.actual.b.mu_per_dollar.y).toFixed(3);
+  
+  // MU/PRICE, OPTIMAL
+  document.getElementById('optimal-mu-price-a-x-' + point.id).innerHTML = (point.optimal.a.mu_per_dollar.x).toFixed(3);
+  document.getElementById('optimal-mu-price-a-y-' + point.id).innerHTML = (point.optimal.a.mu_per_dollar.y).toFixed(3);   
+  document.getElementById('optimal-mu-price-b-x-' + point.id).innerHTML = (point.optimal.b.mu_per_dollar.x).toFixed(3);    
+  document.getElementById('optimal-mu-price-b-y-' + point.id).innerHTML = (point.optimal.b.mu_per_dollar.y).toFixed(3);
+
 }
 
-function updateCurrentInfoBox(e) {
- let data = box.returnData();
 
- let pixel = {
-  'x':e.offsetX,
-  'y':data.h-e.offsetY
- }
+function update_box() {
 
- let val = {
-  'x':pixel.x/data.scale,
-  'y':pixel.y/data.scale
- }
+  // TO HOUSEKEEP GERUND
+  box.CLEAR_CANVAS();
+  box.SHOW_GRID_Y(10);
+  box.SHOW_GRID_X(10);
 
- let amy_ex = val.x;
- let mark_ex = data.Ex - val.x;
- let amy_ey = val.y;
- let mark_ey = data.Ey - val.y;
- let u_amy = amy_ex**data.amy.alpha*amy_ey**(1-data.amy.alpha);
- let u_mark = mark_ex**data.mark.alpha*mark_ey**(1-data.mark.alpha);
- 
- val_current_amy.innerHTML = '(' + Math.floor(amy_ex*100)/100 + ', ' + Math.floor(amy_ey*100)/100 + ')';
- val_current_mark.innerHTML = '(' + Math.floor(mark_ex*100)/100 + ', ' + Math.floor(mark_ey*100)/100 + ')';
- u_current_amy.innerHTML = Math.floor(u_amy*100)/100;
- u_current_mark.innerHTML = Math.floor(u_mark*100)/100;
+
+  // A INITIAL
+  box.SHOWVALUE({'x':points[0].actual.a.allocation.x,'y':points[0].actual.a.allocation.y}, '#fc0', 3);
+  
+  // A OPTIMAL
+  box.SHOWVALUE({'x':points[0].optimal.a.allocation.x,'y':points[0].optimal.a.allocation.y}, '#fc0', 3);
+  
+  // B INITIAL
+  box.SHOWVALUE({'x':points[1].actual.a.allocation.x,'y':points[1].actual.a.allocation.y}, '#c2d1f0', 3);
+
+  // B OPTIMAL
+  box.SHOWVALUE({'x':points[1].optimal.a.allocation.x,'y':points[1].optimal.a.allocation.y}, '#c2d1f0', 3);
+  
+  // A : 0
+  box.DRAW_ISOQUANT({'x':points[0].actual.a.allocation.x, 'y':points[0].actual.a.allocation.y, 'alpha':points[0].params.a.alpha, 'beta':points[0].params.a.beta, 'm':null}, '#fc0', 1);
+
+  // B : 0
+  box.DRAW_ISOQUANT({'x':points[0].actual.b.allocation.x, 'y':points[0].actual.b.allocation.y, 'alpha':points[0].params.b.alpha, 'beta':points[0].params.b.beta, 'm':null}, '#fc0', 1, true);
+  
+  // A : 1
+  box.DRAW_ISOQUANT({'x':points[1].actual.a.allocation.x, 'y':points[1].actual.a.allocation.y, 'alpha':points[1].params.a.alpha, 'beta':points[1].params.a.beta, 'm':null}, '#c2d1f0', 1);
+
+  // B : 1
+  box.DRAW_ISOQUANT({'x':points[1].actual.b.allocation.x, 'y':points[1].actual.b.allocation.y, 'alpha':points[1].params.b.alpha, 'beta':points[1].params.b.beta, 'm':null}, '#c2d1f0', 1, true);
+  
+  
+  /* add the price lines */
+  
+  /* add the regional shading */
+  
+  
+  
+  
 }
 
 window.onload = function() {
+
+  myinputs = document.getElementsByClassName('myinputs');
+
+  input_a_alpha = document.getElementById('input_a_alpha');
+  input_b_alpha = document.getElementById('input_b_alpha');
+  input_a_beta = document.getElementById('input_a_beta');
+  input_b_beta = document.getElementById('input_b_beta');
+  input_a_x = document.getElementById('input_a_x');
+  input_b_x = document.getElementById('input_b_x');
+  input_a_y = document.getElementById('input_a_y');
+  input_b_y = document.getElementById('input_b_y');
   
+  // INITIALIZE POINTS
+  points[0] = new Point(0);
+  points[1] = new Point(1);
+  points[2] = new Point(2); // TESTING
+
+  // PULL DATA FROM INPUT TABLE
+  update_params_from_table(true);
+  
+  // UPDATE POINTS
+  points[0].update(params[0]);
+  points[1].update(params[1]);
+
+  // UPDATE INFO TABLE
+  update_table(points[0]);
+  update_table(points[1]);
+
+  // NEW BOX, SIZE
+  box = new Box();
+  box.dimension(700, 600);
+  box.rangex(0, points[0].actual.a.allocation.x+points[0].actual.b.allocation.x);
+  box.rangey(0, points[0].actual.a.allocation.y+points[0].actual.b.allocation.y);
+  
+  // GET ITS CANVAS, ATTACH IT
+  canvas = box.returnCanvas();
+  container = document.getElementById('container');
+  container.appendChild(canvas);
+  
+  update_box();
+
+  for (let i = 0; i < myinputs.length; i++) {
+    myinputs[i].addEventListener('input', function() {
+
+      // PULL DATA FROM INPUT TABLE
+      update_params_from_table();
+
+      // UPDATE POINTS
+      points[0].update(params[0]);
+      points[1].update(params[1]);
+
+      // UPDATE INFO TABLE
+      update_table(points[0]);
+      update_table(points[1]);
+      
+      // UPDATE BOX
+      box.rangex(0, points[0].actual.a.allocation.x+points[0].actual.b.allocation.x);
+      box.rangey(0, points[0].actual.a.allocation.y+points[0].actual.b.allocation.y);
+      update_box();
+    
+    });
+  }
+
+ 
+ 
+ 
+ 
+   /*
   let blurb = document.getElementById('blurb');
   blurb.style.width = document.getElementById('parameter-table').clientWidth; // or offsetWidth
   
@@ -68,10 +209,8 @@ window.onload = function() {
     canvas_width = window.innerHeight;
   }
   
-  box.updateScale(canvas_width/120);
-  box.resizeCanvas();
-  updateEdgeworthBox();
-  updateInfoBox();
+
+
 
   window.onresize = function(e) {
     
@@ -86,119 +225,195 @@ window.onload = function() {
     box.updateScale(canvas_width/120);
     box.resizeCanvas();
     updateEdgeworthBox();
-    updateInfoBox();
+
     
   }
 
-  let canvas_container = document.getElementById('canvas-container');
-  let c = box.returnCanvas();
-  canvas_container.appendChild(c);
+ */
 
-  c.addEventListener('mousemove', function(e) {
-    updateCurrentInfoBox(e);
-  });
-
-  input_range_alpha_amy.addEventListener('input', function(e) {
-    let val = constrainInputValue(this);
-    input_number_alpha_amy.value = val;
+  canvas.addEventListener('click', function(e) {
+    if (!canvasIsClicked) {
+      canvasIsClicked = true;
+    } else {
+      canvasIsClicked = false;
+      
+      
+     // CANVAS DIMENSIONS
+    let canvas_width = canvas.getBoundingClientRect().right - canvas.getBoundingClientRect().left;
+    let canvas_height = canvas.getBoundingClientRect().bottom - canvas.getBoundingClientRect().top;
     
-    input_range_beta_amy.value = Math.ceil((1-Math.floor(val*100)/100)*100)/100;
-    input_number_beta_amy.value = Math.ceil((1-Math.floor(val*100)/100)*100)/100;
+    // MOUSE POSITION
+    let x = e.x - canvas.getBoundingClientRect().left;
+    let y = e.y - canvas.getBoundingClientRect().top;
+
+    let pixel = {'x':x,'y':y};
+    let val = box.PIXEL2VAL(pixel);
     
-    box.updateAlphaAmy(val);
-    updateEdgeworthBox();
-    updateInfoBox();
-  });
-  
-  input_range_alpha_mark.addEventListener('input', function(e) {
-    let val = constrainInputValue(this);
-    input_number_alpha_mark.value = val;
+    if (val.x < 1) {
+      val.x = 1;
+    }
+    if (val.x >= (box.data.range.x.max-1)) {
+      val.x = box.data.range.x.max - 1;
+    }
+    if (val.y < 1) {
+      val.y = 1;
+    }
+    if (val.y >= (box.data.range.y.max-1)) {
+      val.y = (box.data.range.y.max - 1);
+    }
+
+    // console.log(val);
+
+    // RELATIVE POSITION
+    params[1].a.x_pct = (val.x/box.data.range.x.max);
+    params[1].a.y_pct = (val.y/box.data.range.y.max);
+
+    // ABSOLUTE POSITION
+    params[1].a.x = (box.data.range.x.max)*(val.x/box.data.range.x.max);
+    params[1].a.y = (box.data.range.y.max)*(val.y/box.data.range.y.max);
+     
+    params[1].b.x_pct = 1-params[1].a.x_pct;
+    params[1].b.y_pct = 1-params[1].a.y_pct;
+    params[1].b.x = (box.data.range.x.max) - params[1].a.x;
+    params[1].b.y = (box.data.range.y.max) - params[1].a.y;
+     
+    // UPDATE POINTS
+    points[1].update(params[1]);
+
+    // UPDATE INFO TABLE
+    update_table(points[1]);
     
-    input_range_beta_mark.value = Math.ceil((1-Math.floor(val*100)/100)*100)/100;
-    input_number_beta_mark.value = Math.ceil((1-Math.floor(val*100)/100)*100)/100;
+    // UPDATE BOX
+    update_box();
+      
+      
+      
+      
+      
+      
+    }
+  });
+
+
+  canvas.addEventListener('mousemove', function(e) {
     
-    box.updateAlphaMark(val);
-    updateEdgeworthBox();
-    updateInfoBox();
+    if (canvasIsClicked) {
+      return;
+    }
+    
+    // CANVAS DIMENSIONS
+    let canvas_width = canvas.getBoundingClientRect().right - canvas.getBoundingClientRect().left;
+    let canvas_height = canvas.getBoundingClientRect().bottom - canvas.getBoundingClientRect().top;
+    
+    // MOUSE POSITION
+    let x = e.x - canvas.getBoundingClientRect().left;
+    let y = e.y - canvas.getBoundingClientRect().top;
+
+    let pixel = {'x':x,'y':y};
+    let val = box.PIXEL2VAL(pixel);
+    
+    if (val.x < 1) {
+      val.x = 1;
+    }
+    if (val.x >= (box.data.range.x.max-1)) {
+      val.x = box.data.range.x.max - 1;
+    }
+    if (val.y < 1) {
+      val.y = 1;
+    }
+    if (val.y >= (box.data.range.y.max-1)) {
+      val.y = (box.data.range.y.max - 1);
+    }
+
+    // console.log(val);
+
+    // RELATIVE POSITION
+    params[1].a.x_pct = (val.x/box.data.range.x.max);
+    params[1].a.y_pct = (val.y/box.data.range.y.max);
+
+    // ABSOLUTE POSITION
+    params[1].a.x = (box.data.range.x.max)*(val.x/box.data.range.x.max);
+    params[1].a.y = (box.data.range.y.max)*(val.y/box.data.range.y.max);
+     
+    params[1].b.x_pct = 1-params[1].a.x_pct;
+    params[1].b.y_pct = 1-params[1].a.y_pct;
+    params[1].b.x = (box.data.range.x.max) - params[1].a.x;
+    params[1].b.y = (box.data.range.y.max) - params[1].a.y;
+     
+    // UPDATE POINTS
+    points[1].update(params[1]);
+
+    // UPDATE INFO TABLE
+    update_table(points[1]);
+    
+    // UPDATE BOX
+    update_box();
+
   });
+
+
+
+  function update_params_from_table(initialize) {
+
+    params[0] = {
+     'a':{
+       'alpha':parseFloat(input_a_alpha.value),
+       'beta':1-parseFloat(input_a_alpha.value), // parseFloat(input_a_beta.value),
+       'x_pct':parseFloat(input_a_x.value)/(parseFloat(input_a_x.value)+parseFloat(input_b_x.value)),
+       'y_pct':parseFloat(input_a_y.value)/(parseFloat(input_a_y.value)+parseFloat(input_b_y.value)),
+       'x':parseFloat(input_a_x.value),
+       'y':parseFloat(input_a_y.value)
+     },
+     'b':{
+       'alpha':parseFloat(input_b_alpha.value),
+       'beta':1-parseFloat(input_b_alpha.value), // parseFloat(input_b_beta.value),
+       'x_pct':parseFloat(input_b_x.value)/(parseFloat(input_a_x.value)+parseFloat(input_b_x.value)),
+       'y_pct':parseFloat(input_b_y.value)/(parseFloat(input_a_y.value)+parseFloat(input_b_y.value)),
+       'x':parseFloat(input_b_x.value),
+       'y':parseFloat(input_b_y.value)
+     }
+    };
   
-  // UPDATE EX VALUES
-  input_range_ex_amy_abs.addEventListener('input', function(e) {
-    let val = parseInt(constrainInputValue(this));
-    input_number_ex_amy_abs.value = val;
-    input_range_ex_mark_abs.value = 100-val;
-    input_number_ex_mark_abs.value = 100-val;
-
-    box.updateExAmy(val);
-    box.updateExMark(100-val);
-    updateEdgeworthBox();
-    updateInfoBox();
-  });
+  if (initialize) {
+      params[1] = {
+       'a':{
+         'alpha':parseFloat(input_a_alpha.value),
+         'beta':1-parseFloat(input_a_alpha.value), // parseFloat(input_a_beta.value),
+         'x_pct':0.7,
+         'y_pct':0.85,
+         'x':0.7*(parseFloat(input_a_x.value)+parseFloat(input_b_x.value)),
+         'y':0.85*(parseFloat(input_a_y.value)+parseFloat(input_b_y.value))
+       },
+       'b':{
+         'alpha':parseFloat(input_b_alpha.value),
+         'beta':1-parseFloat(input_b_alpha.value), // parseFloat(input_b_beta.value),
+         'x_pct':0.3,
+         'y_pct':0.15,
+         'x':0.3*(parseFloat(input_a_x.value)+parseFloat(input_b_x.value)),
+         'y':0.15*(parseFloat(input_a_y.value)+parseFloat(input_b_y.value))
+       }
+      };
+    } else {
   
-  input_range_ex_mark_abs.addEventListener('input', function(e) {
-    let val = parseInt(constrainInputValue(this));
-    input_number_ex_mark_abs.value = val;
-    input_range_ex_amy_abs.value = 100-val;
-    input_number_ex_amy_abs.value = 100-val;
+    params[1].a.alpha = parseFloat(input_a_alpha.value);
+    params[1].a.beta = parseFloat(input_a_beta.value);
+    params[1].a.x = params[1].a.x_pct * (parseFloat(input_a_x.value)+parseFloat(input_b_x.value));
+    params[1].a.y = params[1].a.y_pct * (parseFloat(input_a_y.value)+parseFloat(input_b_y.value));
+    
+    params[1].b.alpha = parseFloat(input_b_alpha.value);
+    params[1].b.beta = parseFloat(input_b_beta.value);
+    params[1].b.x = params[1].b.x_pct * (parseFloat(input_a_x.value)+parseFloat(input_b_x.value));
+    params[1].b.y = params[1].b.y_pct * (parseFloat(input_a_y.value)+parseFloat(input_b_y.value));
 
-    box.updateExMark(val);
-    box.updateExAmy(100-val);
-    updateEdgeworthBox();
-    updateInfoBox();
-  });
+    }
 
-  // UPDATE EY VALUES
-  input_range_ey_amy_abs.addEventListener('input', function(e) {
-    let val = parseInt(constrainInputValue(this));
-    input_number_ey_amy_abs.value = val;
-    input_range_ey_mark_abs.value = 100-val;
-    input_number_ey_mark_abs.value = 100-val;
-
-    box.updateEyAmy(val);
-    box.updateEyMark(100-val);
-    updateEdgeworthBox();
-    updateInfoBox();
-  });
-  
-  input_range_ey_mark_abs.addEventListener('input', function(e) {
-    let val = parseInt(constrainInputValue(this));
-    input_number_ey_mark_abs.value = val;
-    input_range_ey_amy_abs.value = 100-val;
-    input_number_ey_amy_abs.value = 100-val;
-
-    box.updateEyMark(val);
-    box.updateEyAmy(100-val);
-    updateEdgeworthBox();
-    updateInfoBox();
-  });
-  
-
-  
-}
-
-function updateEdgeworthBox() {
-  box.clearCanvas();
-  box.updateUtilities();
-  box.updateIsoquants();
-  box.updatePrice();
-  box.updateBudgets();
-  box.showBudgetLine();
-  box.showInitialEndowment();
-
-  box.showContractCurve();
-  box.updateOptimalAllocation();
-  box.showOptimalAllocation();
-}
-
-function constrainInputValue(inputEl) {
-  let val = parseFloat(inputEl.value);
-  let min = parseFloat(inputEl.min);
-  let max = parseFloat(inputEl.max);
-  if (val < min) {
-   val = min;
   }
-  if (val > max) {
-   val = max;
-  }  
-  return val;
+
+
+
 }
+
+
+
+
+

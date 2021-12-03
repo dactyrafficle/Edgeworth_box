@@ -3,12 +3,14 @@ html, body {
 }
 .mytables {
  border-collapse: collapse;
- margin-top: 1vh;
 }
-.mytables td {
- border: 1px solid #ddd;
+.mytables td, .mytables th {
+ border: 1px solid #aaa;
  padding: 0.5vh;
+}
 
+canvas:hover {
+  cursor: crosshair;
 }
 .mytables td.mytables-container {
  padding: 0;
@@ -25,20 +27,20 @@ html, body {
  vertical-align: top;
 
  padding: 1vh;
- border: 1px solid #ddd;
+ border: 1px solid #aaa;
 }
 .sub-section {
  display: inline-block;
  vertical-align: top;
  margin: 1vh;
  padding: 1vh;
- border: 1px solid #ddd;
+ border: 1px solid #aaa;
 }
 .sub-section3 {
  display: inline-block;
  vertical-align: top;
  margin: 1vh;
- border: 1px solid #ddd;
+ border: 1px solid #aaa;
 }
 .myinputs {
  margin: 0.5vh;
@@ -50,4 +52,8 @@ html, body {
 }
 .section p {
 
+}
+
+.mytables td p {
+  text-align: center;
 }

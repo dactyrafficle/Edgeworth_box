@@ -1,10 +1,265 @@
 <html>
 <head>
- <meta charset="utf-8">
- <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <link rel="stylesheet" href='edgeworth.css'>
- <title>edgeworth!</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href='edgeworth.css'>
+  <link rel="shortcut icon" type="image/x-icon" href="index.png">
+  <title>edgeworth!</title>
+  <script src='Edgeworth_point.js'></script>
 </head>
+
+
+  
+  
+<div class='sub-section' id='infobox-container'>
+
+<!-- change eqns, for &alpha; + &beta; !== 1 --> 
+
+<table class='mytables' id='parameter-table'>
+
+ <tr>
+  <td colspan='6'>Parameters</td>
+ </tr>
+
+ <tr>
+  <td>desc</td>
+  <td>range</td>
+  <td>Amy</td>
+  <td>Mark</td>
+ </tr>
+ 
+ <tr>
+  <td>alpha</td>
+  <td>(0,1)</td> 
+  <td><input class="myinputs" type="number" step='0.01' min="0.01" max="0.99" value="0.30" id="input_a_alpha"></td>
+  <td><input class="myinputs" type="number" step='0.01' min="0.01" max="0.99" value="0.20" id="input_b_alpha"></td>
+ </tr>
+ 
+ <tr>
+  <td>beta</td>
+  <td>(0,1)</td>
+  <td><input disabled class="myinputs" type="number" step='0.01' min="0.01" max="0.99" value="0.70" id="input_a_beta"></td>
+  <td><input disabled class="myinputs" type="number" step='0.01' min="0.01" max="0.99" value="0.80" id="input_b_beta"></td>
+ </tr>
+
+ <tr>
+  <td>ex</td>
+  <td>[1,99]</td>
+  <td><input class="myinputs" type="number" min="1" max="99" value="40" id="input_a_x"><br></td>
+  <td><input class="myinputs" type="number" min="1" max="99" value="60" id="input_b_x"></td>
+ </tr>
+
+ 
+ <tr>
+  <td>ey</td>
+  <td>[1,99]</td>
+  <td><input class="myinputs" type="number" min="1" max="99" value="60" id="input_a_y"></td>
+  <td><input class="myinputs" type="number" min="1" max="99" value="40" id="input_b_y"></td>
+ </tr>
+</table>
+
+
+<table class='mytables' style='margin-top: 1vh;'>
+
+ <tr>
+  <td><p> &middot; </p></td>
+  <td><p> &middot; </p></td>
+  <th colspan=4><p> POINT[0] <br> INPUT TABLE </p></th>
+  <th colspan=4><p> POINT[1] <br> CURSOR </p></th>
+ </tr>
+
+ <tr>
+  <td><p> &middot; </p></td>
+  <td><p> &middot; </p></td>
+  <td colspan=2><p> Actual </p></td>
+  <td colspan=2><p> Optimal </p></td>
+  <td colspan=2><p> Actual </p></td>
+  <td colspan=2><p> Optimal </p></td>
+ </tr>
+ 
+ <tr>
+  <td><p> &middot; </p></td>
+  <td><p> &middot; </p></td>
+  <td><p><span style='color: #fff'>0.0</span> x <span style='color: #fff'>0.0</span></p></td>
+  <td><p><span style='color: #fff'>0.0</span> y <span style='color: #fff'>0.0</span></p></td>
+  <td><p><span style='color: #fff'>0.0</span> x <span style='color: #fff'>0.0</span></p></td>
+  <td><p><span style='color: #fff'>0.0</span> y <span style='color: #fff'>0.0</span></p></td>
+  <td><p><span style='color: #fff'>....</span> x <span style='color: #fff'>....</span></p></td>
+  <td><p><span style='color: #fff'>0.0</span> y <span style='color: #fff'>0.0</span></p></td>
+  <td><p><span style='color: #fff'>0.0</span> x <span style='color: #fff'>0.0</span></p></td>
+  <td><p><span style='color: #fff'>0.0</span> y <span style='color: #fff'>0.0</span></p></td>
+ </tr>
+ 
+ <tr>
+  <th rowspan=2><p> Allocation </p></th>
+  <th><p> A </p></th>
+  <td><p id='current-allocation-a-x-0'></p></td>
+  <td><p id='current-allocation-a-y-0'></p></td>
+  <td><p id='optimal-allocation-a-x-0'></p></td>
+  <td><p id='optimal-allocation-a-y-0'></p></td>
+  
+  <td><p id='current-allocation-a-x-1'></p></td>
+  <td><p id='current-allocation-a-y-1'></p></td>
+  <td><p id='optimal-allocation-a-x-1'></p></td>
+  <td><p id='optimal-allocation-a-y-1'></p></td>
+ </tr>
+
+ <tr>
+  <th><p> B </p></th>
+  <td><p id='current-allocation-b-x-0'></p></td>
+  <td><p id='current-allocation-b-y-0'></p></td>
+  <td><p id='optimal-allocation-b-x-0'></p></td>
+  <td><p id='optimal-allocation-b-y-0'></p></td>
+  
+  <td><p id='current-allocation-b-x-1'></p></td>
+  <td><p id='current-allocation-b-y-1'></p></td>
+  <td><p id='optimal-allocation-b-x-1'></p></td>
+  <td><p id='optimal-allocation-b-y-1'></p></td>
+ </tr>
+
+ <tr>
+  <th rowspan=2><p> Budget </p></th>
+  <th><p> A </p></th>
+  <td colspan=2><p id='current-budget-a-0'></p></td>
+  <td colspan=2><p id='optimal-budget-a-0'></p></td>
+  
+  <td colspan=2><p id='current-budget-a-1'></p></td>
+  <td colspan=2><p id='optimal-budget-a-1'></p></td>
+ </tr>
+ 
+ <tr>
+  <th><p> B </p></th>
+  <td colspan=2><p id='current-budget-b-0'></p></td>
+  <td colspan=2><p id='optimal-budget-b-0'></p></td>
+  
+  <td colspan=2><p id='current-budget-b-1'></p></td>
+  <td colspan=2><p id='optimal-budget-b-1'></p></td>
+ </tr>
+
+ <tr>
+  <th rowspan=2><p> Utility </p></th>
+  <th><p> A </p></th>
+  <td colspan=2><p id='current-utility-a-0'></p></td>
+  <td colspan=2><p id='optimal-utility-a-0'></p></td>
+  
+  <td colspan=2><p id='current-utility-a-1'></p></td>
+  <td colspan=2><p id='optimal-utility-a-1'></p></td>
+ </tr>
+ 
+ <tr>
+  <th><p> B </p></th>
+  <td colspan=2><p id='current-utility-b-0'></p></td>
+  <td colspan=2><p id='optimal-utility-b-0'></p></td>
+  
+  <td colspan=2><p id='current-utility-b-1'></p></td>
+  <td colspan=2><p id='optimal-utility-b-1'></p></td>
+ </tr>
+
+ <tr>
+  <th rowspan=2><p> MU </p></th>
+  <th><p> A </p></th>
+  <td><p id='current-mu-a-x-0'></p></td>
+  <td><p id='current-mu-a-y-0'></p></td>
+  <td><p id='optimal-mu-a-x-0'></p></td>
+  <td><p id='optimal-mu-a-y-0'></p></td>
+  
+  <td><p id='current-mu-a-x-1'></p></td>
+  <td><p id='current-mu-a-y-1'></p></td>
+  <td><p id='optimal-mu-a-x-1'></p></td>
+  <td><p id='optimal-mu-a-y-1'></p></td>
+ </tr>
+
+ <tr>
+  <th><p> B </p></th>
+  <td><p id='current-mu-b-x-0'></p></td>
+  <td><p id='current-mu-b-y-0'></p></td>
+  <td><p id='optimal-mu-b-x-0'></p></td>
+  <td><p id='optimal-mu-b-y-0'></p></td>
+  
+  <td><p id='current-mu-b-x-1'></p></td>
+  <td><p id='current-mu-b-y-1'></p></td>
+  <td><p id='optimal-mu-b-x-1'></p></td>
+  <td><p id='optimal-mu-b-y-1'></p></td>
+ </tr>
+ 
+ <tr>
+  <th rowspan=2><p> MRS </p></th>
+  <th><p> A </p></th>
+  <td><p id='current-mrs-a-xy-0'></p></td>
+  <td><p id='current-mrs-a-yx-0'></p></td>
+  <td><p id='optimal-mrs-a-xy-0'></p></td>
+  <td><p id='optimal-mrs-a-yx-0'></p></td>
+  
+  <td><p id='current-mrs-a-xy-1'></p></td>
+  <td><p id='current-mrs-a-yx-1'></p></td>
+  <td><p id='optimal-mrs-a-xy-1'></p></td>
+  <td><p id='optimal-mrs-a-yx-1'></p></td>
+ </tr>
+
+ <tr>
+  <th><p> B </p></th>
+  <td><p id='current-mrs-b-xy-0'></p></td>
+  <td><p id='current-mrs-b-yx-0'></p></td>
+  <td><p id='optimal-mrs-b-xy-0'></p></td>
+  <td><p id='optimal-mrs-b-yx-0'></p></td>
+  
+  <td><p id='current-mrs-b-xy-1'></p></td>
+  <td><p id='current-mrs-b-yx-1'></p></td>
+  <td><p id='optimal-mrs-b-xy-1'></p></td>
+  <td><p id='optimal-mrs-b-yx-1'></p></td>
+ </tr>
+
+ 
+ <tr>
+  <th rowspan=2><p> <span>Price of x</span> <br> <span>let P<sub>y</sub>=1</span></p></th>
+  <th><p> A </p></th>
+  <td rowspan=2 colspan=4><p id='price-x-0'></p></td>
+  <td rowspan=2 colspan=4><p id='price-x-1'></p></td>
+ </tr>
+ 
+ <tr>
+  <th><p> B </p></th>
+ </tr>
+
+<!-- add a modal as a popup -->
+
+
+ <tr>
+  <th rowspan=2><p> MU / price </p><p> value for $ </p></th>
+  <th><p> A </p></th>
+  <td><p id='current-mu-price-a-x-0'></p></td>
+  <td><p id='current-mu-price-a-y-0'></p></td>
+  <td><p id='optimal-mu-price-a-x-0'></p></td>
+  <td><p id='optimal-mu-price-a-y-0'></p></td>
+  
+  <td><p id='current-mu-price-a-x-1'></p></td>
+  <td><p id='current-mu-price-a-y-1'></p></td>
+  <td><p id='optimal-mu-price-a-x-1'></p></td>
+  <td><p id='optimal-mu-price-a-y-1'></p></td>
+ </tr>
+
+ <tr>
+  <th><p> B </p></th>
+  <td><p id='current-mu-price-b-x-0'></p></td>
+  <td><p id='current-mu-price-b-y-0'></p></td>
+  <td><p id='optimal-mu-price-b-x-0'></p></td>
+  <td><p id='optimal-mu-price-b-y-0'></p></td>
+  
+  <td><p id='current-mu-price-b-x-1'></p></td>
+  <td><p id='current-mu-price-b-y-1'></p></td>
+  <td><p id='optimal-mu-price-b-x-1'></p></td>
+  <td><p id='optimal-mu-price-b-y-1'></p></td>
+ </tr>
+
+</table>
+
+</div>
+
+<div class='sub-section3' id='container'></div>
+<script src='Box.js'></script>
+<script src='setup.js'></script>
+
+
 
 <div class='sub-section' id='infobox-container'>
 
@@ -17,195 +272,24 @@
  <p> The trade cost is <span class='inline-code'>k&middot;mu.y</span> utility, but the gain is <span class='inline-code'>k&middot;(py/px)&middot;mu.x</span> utility.<p>
  <p> The contract curve is where <span class='inline-code'>amy.mrs</span> = <span class='inline-code'>mark.mrs</span> </p>
 
- <!--
- <p style='border-bottom: 1px solid #999'></p>
- <p> Imagine you have 2 piles of things, but only care about the total number of things. </p>
- <p> One pile has 300 blue things, which each cost $3.</p>
- <p> The other pile has 200 red things and they cost $9. </p>
- <p> So initially you have (300, 200) </p>
- <p> But you can sell 1 red thing, receive $9, and buy 3 blue things. <p>
- <p> And your allocation would be (303, 199) </p>
- <p> another. at the given price, whats the change in u for making an incremental exchange along the budget line? </p>
- 
+
+ <p> MU/price is the real driver of change. Obviously the MRSs are equal at equilibrium, but thats just a final result. while MU/prices are not equal, that impacts the market, and drives a change in price </p>
+
+  <!--
+    <p style='border-bottom: 1px solid #999'></p>
+    <p> Imagine you have 2 piles of things, but only care about the total number of things. </p>
+    <p> One pile has 300 blue things, which each cost $3.</p>
+    <p> The other pile has 200 red things and they cost $9. </p>
+    <p> So initially you have (300, 200) </p>
+    <p> But you can sell 1 red thing, receive $9, and buy 3 blue things. <p>
+    <p> And your allocation would be (303, 199) </p>
+    <p> another. at the given price, whats the change in u for making an incremental exchange along the budget line? </p>
   -->
+
+</div>
 </div>
 </div>
 
-<table class='mytables' id='parameter-table'>
- <tr>
-  <td colspan='6'>Parameters</td>
- </tr>
- <tr>
-  <td>desc</td>
-  <td>range</td>
-  <td colspan='2'>Amy</td>
-  <td colspan='2'>Mark</td>
- </tr>
- 
- <tr>
-  <td>alpha</td>
-  <td>(0,1)</td>
-  
-  <td>
-   <input class="myinputs" type="range" step='0.01' min="0.01" max="0.99" value="0.30" id="input_range_alpha_amy">
-  </td>
-  
-  <td>
-   <input class="myinputs" disabled type="number" step='0.01' min="0.01" max="0.99" value="0.30" id="input_number_alpha_amy">
-  </td>
-  
-  <td>
-   <input class="myinputs" type="range" step='0.01' min="0.01" max="0.99" value="0.20" id="input_range_alpha_mark">
-  </td>
-  
-  <td>
-   <input class="myinputs" disabled type="number" step='0.01' min="0.01" max="0.99" value="0.20" id="input_number_alpha_mark">
-  </td>
-  
- </tr>
- <tr>
-  <td>beta</td>
-  <td>(0,1)</td>
-  
-  <td><input class="myinputs" disabled type="range" step='0.01' min="0.01" max="0.99" value="0.70" id="input_range_beta_amy"></td>
-  <td><input class="myinputs" disabled type="number" step='0.01' min="0.01" max="0.99" value="0.70" id="input_number_beta_amy"></td>
-  
-  <td><input class="myinputs" disabled type="range" step='0.01' min="0.01" max="0.99" value="0.80" id="input_range_beta_mark"></td>
-  <td><input class="myinputs" disabled type="number" step='0.01' min="0.01" max="0.99" value="0.80" id="input_number_beta_mark"></td>
-  
- </tr>
-
- <tr>
-  <td>ex</td>
-  <td>[1,99]</td>
- 
-  <td>
-   <input class="myinputs" type="range" min="1" max="99" value="40" id="input_range_ex_amy_abs">
-  </td>
-
-  <td>
-   <input class="myinputs" disabled type="number" min="1" max="99" value="40" id="input_number_ex_amy_abs"><br>
-  </td>
-  
-  <td>
-   <input class="myinputs" type="range" min="1" max="99" value="60" id="input_range_ex_mark_abs">
-  </td>
-  
-  <td>
-   <input class="myinputs" disabled type="number" min="1" max="99" value="60" id="input_number_ex_mark_abs">
-  </td>
- </tr>
-
- 
- <tr>
-  <td>ey</td>
-  <td>[1,99]</td>
-  
-  <td>
-   <input class="myinputs" type="range" min="1" max="99" value="60" id="input_range_ey_amy_abs">
-  </td>
-  
-  <td>
-   <input class="myinputs" disabled type="number" min="1" max="99" value="60" id="input_number_ey_amy_abs">
-  </td>
-  
-  <td>
-   <input class="myinputs" type="range" min="1" max="99" value="40" id="input_range_ey_mark_abs">
-  </td>
-  
-  <td>
-   <input class="myinputs" disabled type="number" min="1" max="99" value="40" id="input_number_ey_mark_abs">
-  </td>
- </tr>
-</table> 
-
-
-<table class='mytables'>
- 
- <tr>
-  <td></td>
-  <td></td>
-  <td>Initial Point</td>
-  <td>Optimal Point</td>
-  <td>Current Point</td>
- </tr>
- 
- <tr>
-  <td><strong>x</strong> = [x y]</td>
-  <td>Amy : <br> Mark : </td>
-  <td><span id='val_initial_amy'></span><br><span id='val_initial_mark'></span></td>
-  <td></td>
-  <td>Amy : <span id='val_current_amy'></span><br>
-  Mark : <span id='val_current_mark'></td>
-  </td>
- </tr>
-
- <tr>
-  <td>u(<strong>x</strong>)</td>
-  <td>Amy : <br> Mark : </td>
-  <td><span id='u_initial_amy'></span><br><span id='u_initial_mark'></span></td>
-  <td></td>
-  <td>Amy : <span id='u_current_amy'></span><br>
-  Mark : <span id='u_current_mark'></span></td>
- </tr>
- 
- <tr>
-  <td>&nabla;u</td>
-  <td>Amy : <br> Mark : </td>
-  <td>
-   <span id='mu_x_initial_amy'></span> - <span id='mu_y_initial_amy'></span><br>
-   <span id='mu_x_initial_mark'></span> - <span id='mu_y_initial_mark'></span>
-  </td>
-  <td></td>
-  <td></td>
-
- </tr>
- 
- <tr>
-  <td>mrs</td>
-  <td>Amy : <br> Mark : </td>
-  <td><span id='mrs_initial_amy'></span><br><span id='mrs_initial_mark'></span></td>
-  <td></td>
-  <td></td>
- </tr>
- 
- <tr>
-  <td><strong>p</strong> = [p<sub>x</sub> p<sub>y</sub>] </td>
-  <td>Amy : <br> Mark : </td>
-  <td></td>
-  <td></td>
-  <td></td>
- </tr>
- 
- <tr>
-  <td>&nabla;u &middot; <strong>p<sup>T</sup></strong></td>
-  <td>Amy : <br> Mark : </td>
-  <td>
-   <span id='u_per_dollar_on_x_initial_amy'></span> - <span id='u_per_dollar_on_y_initial_amy'></span><br>
-   <span id='u_per_dollar_on_x_initial_mark'></span> - <span id='u_per_dollar_on_y_initial_mark'></span>
-  </td>
-  <td></td>
-  <td></td>
- </tr>
- 
- <tr>
-  <td>$/utility</td>
-  <td>Amy : <br> Mark : </td>
-  <td>
-   <span id='$_per_unit_on_x_initial_amy'></span> - <span id='$_per_unit_on_y_initial_amy'></span><br>
-   <span id='$_per_unit_on_x_initial_mark'></span> - <span id='$_per_unit_on_y_initial_mark'></span>
-  </td>
-  <td></td>
-  <td></td>
- </tr>
-</table>
-
-</div>
-
-<div class='sub-section3' id='canvas-container'></div>
-
-<script src='setup.js'></script>
-<script src='edgeworth.js'></script>
 
 <script></script>
 
