@@ -1,4 +1,14 @@
 
+/*
+
+  add the regional shading
+
+*/
+
+
+
+
+
 let input_a_alpha;
 let input_b_alpha;
 let input_a_beta;
@@ -109,10 +119,10 @@ function update_box() {
   box.SHOWVALUE({'x':points[1].optimal.a.allocation.x,'y':points[1].optimal.a.allocation.y}, '#c2d1f0', 3);
   
   // A : 0
-  box.DRAW_ISOQUANT({'x':points[0].actual.a.allocation.x, 'y':points[0].actual.a.allocation.y, 'alpha':points[0].params.a.alpha, 'beta':points[0].params.a.beta, 'm':null}, '#fc0', 1);
+  box.DRAW_ISOQUANT({'x':points[0].actual.a.allocation.x, 'y':points[0].actual.a.allocation.y, 'alpha':points[0].params.a.alpha, 'beta':points[0].params.a.beta, 'm':null}, '#ffdd99', 2);
 
   // B : 0
-  box.DRAW_ISOQUANT({'x':points[0].actual.b.allocation.x, 'y':points[0].actual.b.allocation.y, 'alpha':points[0].params.b.alpha, 'beta':points[0].params.b.beta, 'm':null}, '#fc0', 1, true);
+  box.DRAW_ISOQUANT({'x':points[0].actual.b.allocation.x, 'y':points[0].actual.b.allocation.y, 'alpha':points[0].params.b.alpha, 'beta':points[0].params.b.beta, 'm':null}, '#c2d6d6', 2, true);
   
   // A : 1
   box.DRAW_ISOQUANT({'x':points[1].actual.a.allocation.x, 'y':points[1].actual.a.allocation.y, 'alpha':points[1].params.a.alpha, 'beta':points[1].params.a.beta, 'm':null}, '#c2d1f0', 1);
@@ -120,12 +130,20 @@ function update_box() {
   // B : 1
   box.DRAW_ISOQUANT({'x':points[1].actual.b.allocation.x, 'y':points[1].actual.b.allocation.y, 'alpha':points[1].params.b.alpha, 'beta':points[1].params.b.beta, 'm':null}, '#c2d1f0', 1, true);
   
-  
-  /* add the price lines */
-  
-  /* add the regional shading */
+  // BUDGET LINE : 1
+  box.DRAW_LINE(
+    {
+      'x':points[0].actual.a.allocation.x,
+      'y':points[0].actual.a.allocation.y
+    }, -points[0].system.price.x, '#aaa', 1);
 
-  
+  // BUDGET LINE : 2
+  box.DRAW_LINE(
+    {
+      'x':points[1].actual.a.allocation.x,
+      'y':points[1].actual.a.allocation.y
+    }, -points[1].system.price.x, '#ccc', 1);
+
 }
 
 window.onload = function() {
