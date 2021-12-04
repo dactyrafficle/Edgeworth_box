@@ -105,18 +105,6 @@ function update_box() {
   box.SHOW_GRID_Y(10);
   box.SHOW_GRID_X(10);
 
-
-  // A INITIAL
-  box.SHOWVALUE({'x':points[0].actual.a.allocation.x,'y':points[0].actual.a.allocation.y}, '#fc0', 3);
-  
-  // A OPTIMAL
-  box.SHOWVALUE({'x':points[0].optimal.a.allocation.x,'y':points[0].optimal.a.allocation.y}, '#fc0', 3);
-  
-  // B INITIAL
-  box.SHOWVALUE({'x':points[1].actual.a.allocation.x,'y':points[1].actual.a.allocation.y}, '#c2d1f0', 3);
-
-  // B OPTIMAL
-  box.SHOWVALUE({'x':points[1].optimal.a.allocation.x,'y':points[1].optimal.a.allocation.y}, '#c2d1f0', 3);
   
   // A : 0
   box.DRAW_ISOQUANT({'x':points[0].actual.a.allocation.x, 'y':points[0].actual.a.allocation.y, 'alpha':points[0].params.a.alpha, 'beta':points[0].params.a.beta, 'm':null}, '#ffdd99', 2);
@@ -143,6 +131,19 @@ function update_box() {
       'x':points[1].actual.a.allocation.x,
       'y':points[1].actual.a.allocation.y
     }, -points[1].system.price.x, '#ccc', 1);
+
+  // A INITIAL
+  box.SHOWVALUE({'x':points[0].actual.a.allocation.x,'y':points[0].actual.a.allocation.y}, '#fc0', 3.5);
+  
+  // A OPTIMAL
+  box.SHOWVALUE({'x':points[0].optimal.a.allocation.x,'y':points[0].optimal.a.allocation.y}, '#fc0', 3.5);
+  
+  // B INITIAL
+  box.SHOWVALUE({'x':points[1].actual.a.allocation.x,'y':points[1].actual.a.allocation.y}, '#c2d1f0', 3.5);
+
+  // B OPTIMAL
+  box.SHOWVALUE({'x':points[1].optimal.a.allocation.x,'y':points[1].optimal.a.allocation.y}, '#c2d1f0', 3.5);
+
 
 }
 
