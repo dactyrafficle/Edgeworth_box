@@ -105,18 +105,27 @@ function update_box() {
   box.SHOW_GRID_Y(10);
   box.SHOW_GRID_X(10);
 
-  
   // A : 0
-  box.DRAW_ISOQUANT({'x':points[0].actual.a.allocation.x, 'y':points[0].actual.a.allocation.y, 'alpha':points[0].params.a.alpha, 'beta':points[0].params.a.beta, 'm':null}, '#ffdd99', 2);
+  box.DRAW_ISOQUANT({
+    'x':points[0].actual.a.allocation.x,
+    'y':points[0].actual.a.allocation.y,
+    'alpha':points[0].params.a.alpha,
+    'beta':points[0].params.a.beta,
+    'color_string':'#ffdd99',
+    'line_width':2,
+    'inverted':false
+  });
 
   // B : 0
-  box.DRAW_ISOQUANT({'x':points[0].actual.b.allocation.x, 'y':points[0].actual.b.allocation.y, 'alpha':points[0].params.b.alpha, 'beta':points[0].params.b.beta, 'm':null}, '#c2d6d6', 2, true);
+  box.DRAW_ISOQUANT({'x':points[0].actual.b.allocation.x, 'y':points[0].actual.b.allocation.y, 'alpha':points[0].params.b.alpha, 'beta':points[0].params.b.beta, 'm':null, 'color_string':'#c2d6d6', 'line_width':2, 'inverted':true});
+
   
   // A : 1
-  box.DRAW_ISOQUANT({'x':points[1].actual.a.allocation.x, 'y':points[1].actual.a.allocation.y, 'alpha':points[1].params.a.alpha, 'beta':points[1].params.a.beta, 'm':null}, '#c2d1f0', 1);
-
+  box.DRAW_ISOQUANT({'x':points[1].actual.a.allocation.x, 'y':points[1].actual.a.allocation.y, 'alpha':points[1].params.a.alpha, 'beta':points[1].params.a.beta, 'm':null, 'color_string':'#c2d1f0', 'line_width':1, 'inverted':false});
+  
   // B : 1
-  box.DRAW_ISOQUANT({'x':points[1].actual.b.allocation.x, 'y':points[1].actual.b.allocation.y, 'alpha':points[1].params.b.alpha, 'beta':points[1].params.b.beta, 'm':null}, '#c2d1f0', 1, true);
+  box.DRAW_ISOQUANT({'x':points[1].actual.b.allocation.x, 'y':points[1].actual.b.allocation.y, 'alpha':points[1].params.b.alpha, 'beta':points[1].params.b.beta, 'm':null, 'color_string':'#c2d1f0', 'line_width':1, 'inverted':true});
+  
   
   // BUDGET LINE : 1
   box.DRAW_LINE(
