@@ -25,15 +25,19 @@ let humans = [
 ];
 
 
-let box;
+let box, px;
 window.addEventListener('load', function() {
 
-  console.log(solve_p(humans));
+  let market_solution = solve_p(humans);
+  px = market_solution.p;
+  console.log(px);
 
+  // INITIALIZE BOX
   box = new Box();
   container.appendChild(box.RETURN_CONTAINER());
-
   box.CANVAS_SIZE(500, 500);
+  
+  
   box.RANGE_X(0, humans[0].ex + humans[1].ex);          
   box.RANGE_Y(0, humans[0].ey + humans[1].ey);
 
@@ -46,6 +50,8 @@ window.addEventListener('load', function() {
   box.SHOW_GRID_Y(10);
   
   box.LINE_WIDTH(2);
+  
+  // THE FIRST IDC
   box.STROKE_STYLE('#fc0a');
   box.SHOW_CES_INDIFFERENCE_CURVE({
     'delta':humans[0].delta, 
@@ -55,13 +61,8 @@ window.addEventListener('load', function() {
     'x':humans[0].ex,
     'y':humans[0].ey
   });
-  // DRAW POINT
-  box.FILL_STYLE('#fc0a');
-  box.RADIUS(2);
-  box.POINT({'x':humans[0].ex,'y':humans[0].ey});
 
-  
-  
+  // THE 2ND IDC
   box.STROKE_STYLE('#58Da');
   box.SHOW_CES_INDIFFERENCE_CURVE({
     'delta':humans[1].delta, 
@@ -69,13 +70,22 @@ window.addEventListener('load', function() {
     'beta':humans[1].beta, 
     'u':null,
     'x':humans[1].ex,
-    'y':humans[1].ey
+    'y':humans[1].ey,
+    'inverted':true
   });
-  // DRAW POINT
-  box.FILL_STYLE('#58Da');
-  box.RADIUS(2);
-  box.POINT({'x':humans[1].ex,'y':humans[1].ey});
   
+  // THE INITIAL ENDOWMENTS
+  box.FILL_STYLE('#3339');
+  box.RADIUS(1.4);
+  box.POINT({'x':(box.data.range.x.max - humans[1].ex),'y':(box.data.range.y.max - humans[1].ey)});
+  
+  // DRAW THE BUDGET LINE
+  box.LINE_WIDTH(1);
+  box.STROKE_STYLE('#9999');
+  box.CONNECT_POINTS([
+    {'x':0,'y':(humans[0].ey + humans[0].ex*px)},
+    {'x':box.data.range.x.max,'y':humans[0].ey-(box.data.range.x.max - humans[0].ex)*px}
+  ]);
   
 }); // CLOSING window.onload 
 

@@ -22,51 +22,52 @@
 </head>
 <body>
 
-<div class='section border margin padding'>
+<div class='box border margin padding'>
 
-<p> there are 2 goods. x and y </p>
+<p> there are 2 people, a and b, and both start out with goods x and y. </p>
+<p> both ppl have CES utility, u = () <sup>1/&delta;</sup></p>
+<p> they trade so that </p>
 <ul>
-  <li><p> supply_x = demand_x </p>
-  <li><p> supply_y = demand_y </p>
+  <li><p> the supply of x = the demand of x </p>
+  <li><p> the supply of y = the demand of y </p>
 </ul>
 
-<pre>
-  // we could get the partial derivatives of each demand function
-  // but for this problem, can i think that maybe the total derivatives are always negative with p ?
-  // tried the newton raphson
-  // why doesnt it work here?
-</pre>
+<h4> the market for x </h4>
 
 <p><span class='math'> \dfrac{M}{p_x + p_y \cdot A ^ B} + \dfrac{M}{p_x + p_y \cdot A ^ B} = e_x + e_x </span></p>
+<p><span class='math'> A = \frac{p_y}{p_x} \cdot \frac{\alpha}{\beta} </span>, and <span class='math'>B = \frac{1}{1-\delta}</span></p>
+<p> multiply LHS by <span class='math'> \frac{p_y}{p_y} </span></p>
+
+<p><span class='math'> \dfrac{\frac{1}{p_y}}{\frac{1}{p_y}} \cdot \bigg ( \dfrac{p_x e_x + p_y e_y}{p_x + p_y \cdot A ^ B} + \dfrac{p_x e_x + p_y e_y}{p_x + p_y \cdot A ^ B} \bigg ) = e_x + e_x </span></p>
+
+<p> let <span class='math'> p = \frac{p_x}{p_y} </span></p>
+
+<p><span class='math'> \dfrac{p \cdot e_x + e_y}{p + \Big ( \frac{\beta}{\alpha} \cdot p \Big )^{ \frac{1}{1-\delta} } } + \dfrac{p \cdot e_x + e_y}{p + \Big ( \frac{\beta}{\alpha} \cdot p \Big )^{ \frac{1}{1-\delta} } } = e_x + e_x </span></p>
+
+<p> solve for <span class='math'> p </span></p>
+<p> i used the Newton-Raphson method </p>
+<p> But ! </p>
+<ul>
+ <li><p> examine the partial and total derivatives </p>
+ <li><p> why can i let py=1 in the edgeworth box, but not another linear system? </p>
+ <li><p> consider all the cases, where delta = 0, delta = 1 etc. </p>
+ <li><p> and think of log-linear preferences too </p>
+</ul>
 
 
-<p> multiply LHS by <span class='math'> \dfrac{p_y}{p_y} </span></p>
-
-<p><span class='math'> \dfrac{\frac{1}{p_y}}{\frac{1}{p_y}} \cdot \dfrac{p_x e_x + p_y e_y}{p_x + p_y \cdot A ^ B} + \dfrac{M}{p_x + p_y \cdot A ^ B} = ex + ex </span></p>
-
-<p><span class='math'> \dfrac{p \cdot e_x + e_y}{p + A ^ B} + \dfrac{M}{p_x + p_y \cdot A ^ B} = ex + ex </span></p>
-
-
-<p> A = p_y p_x \alpha \beta </p>
-
-<p><span class='math border margin padding'> \dfrac{p \cdot e_x + e_y}{p + \Big ( \frac{\beta}{\alpha} \cdot p \Big )^{ \frac{1}{1-\delta} } } + \dfrac{M}{p_x + p_y \cdot A ^ B} = e_x + e_x </span></p>
-
-<p> solve for p </p>
-<p> easy since we know that as p goes up, demand goes down, so theres a directional advantage here </p>
-<p> or maybe look at the total derivative. </p>
-<p> can i use IMFT here ? </p>
-
-<p> and we can let p_y = 1 </p>
 
 <table class='mytables' id='my_input_table'></table>
 
 </div>
 
 
+<div class='box border margin padding'>
 <table class='mytables'>
   <tr><th colspan=99>title</th></tr>
   <tr><td><div id='container'></div></td></tr>
 </table>
+</div>
+
 
 </body>
 </html>
