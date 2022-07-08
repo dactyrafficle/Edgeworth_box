@@ -1,296 +1,72 @@
+<!DOCTYPE html>
 <html>
 <head>
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href='edgeworth.css'>
-  <link rel="shortcut icon" type="image/x-icon" href="index.png">
-  <title>edgeworth!</title>
-  <script src='Edgeworth_point.js'></script>
+  
+  <title> E &middot; </title>
+  
+  <link rel="icon" href="./includes/a.png">
+  <link rel="stylesheet" type="text/css" href="./includes/a.css">
+  
+  <script src='./includes/Box.js'></script>
+
+  <script src='./setup.js'></script>
+
+  <!-- the wonderful katex ! -->
+  <link rel="stylesheet" href="./includes/katex/katex.min.css">
+  <script src="./includes/katex/katex.min.js"></script>
+  <script src="./includes/a.js"></script>
+
 </head>
+<body>
+
+<div class='section border margin padding'>
+
+<p> there are 2 goods. x and y </p>
+<ul>
+  <li><p> supply_x = demand_x </p>
+  <li><p> supply_y = demand_y </p>
+</ul>
+
+<pre>
+  // we could get the partial derivatives of each demand function
+  // but for this problem, can i think that maybe the total derivatives are always negative with p ?
+  // tried the newton raphson
+  // why doesnt it work here?
+</pre>
+
+<p><span class='math'> \dfrac{M}{p_x + p_y \cdot A ^ B} + \dfrac{M}{p_x + p_y \cdot A ^ B} = e_x + e_x </span></p>
 
 
-  
-  
-<div class='sub-section' id='infobox-container'>
+<p> multiply LHS by <span class='math'> \dfrac{p_y}{p_y} </span></p>
 
-<!-- change eqns, for &alpha; + &beta; !== 1 --> 
+<p><span class='math'> \dfrac{\frac{1}{p_y}}{\frac{1}{p_y}} \cdot \dfrac{p_x e_x + p_y e_y}{p_x + p_y \cdot A ^ B} + \dfrac{M}{p_x + p_y \cdot A ^ B} = ex + ex </span></p>
 
-<table class='mytables' id='parameter-table'>
+<p><span class='math'> \dfrac{p \cdot e_x + e_y}{p + A ^ B} + \dfrac{M}{p_x + p_y \cdot A ^ B} = ex + ex </span></p>
 
- <tr>
-  <td colspan='6'>Parameters</td>
- </tr>
 
- <tr>
-  <td>desc</td>
-  <td>range</td>
-  <td>Amy</td>
-  <td>Mark</td>
- </tr>
- 
- <tr>
-  <td>alpha</td>
-  <td>(0,1)</td> 
-  <td><input class="myinputs" type="number" step='0.01' min="0.01" max="0.99" value="0.30" id="input_a_alpha"></td>
-  <td><input class="myinputs" type="number" step='0.01' min="0.01" max="0.99" value="0.20" id="input_b_alpha"></td>
- </tr>
- 
- <tr>
-  <td>beta</td>
-  <td>(0,1)</td>
-  <td><input disabled class="myinputs" type="number" step='0.01' min="0.01" max="0.99" value="0.70" id="input_a_beta"></td>
-  <td><input disabled class="myinputs" type="number" step='0.01' min="0.01" max="0.99" value="0.80" id="input_b_beta"></td>
- </tr>
+<p> A = p_y p_x \alpha \beta </p>
 
- <tr>
-  <td>ex</td>
-  <td>[1,99]</td>
-  <td><input class="myinputs" type="number" min="1" max="99" value="40" id="input_a_x"><br></td>
-  <td><input class="myinputs" type="number" min="1" max="99" value="60" id="input_b_x"></td>
- </tr>
+<p><span class='math border margin padding'> \dfrac{p \cdot e_x + e_y}{p + \Big ( \frac{\beta}{\alpha} \cdot p \Big )^{ \frac{1}{1-\delta} } } + \dfrac{M}{p_x + p_y \cdot A ^ B} = e_x + e_x </span></p>
 
- 
- <tr>
-  <td>ey</td>
-  <td>[1,99]</td>
-  <td><input class="myinputs" type="number" min="1" max="99" value="60" id="input_a_y"></td>
-  <td><input class="myinputs" type="number" min="1" max="99" value="40" id="input_b_y"></td>
- </tr>
+<p> solve for p </p>
+<p> easy since we know that as p goes up, demand goes down, so theres a directional advantage here </p>
+<p> or maybe look at the total derivative. </p>
+<p> can i use IMFT here ? </p>
+
+<p> and we can let p_y = 1 </p>
+
+<table class='mytables' id='my_input_table'></table>
+
+</div>
+
+
+<table class='mytables'>
+  <tr><th colspan=99>title</th></tr>
+  <tr><td><div id='container'></div></td></tr>
 </table>
 
-
-<table class='mytables' style='margin-top: 1vh;'>
-
- <tr>
-  <td><p> &middot; </p></td>
-  <td><p> &middot; </p></td>
-  <th colspan=4><p> POINT[0] <br> INPUT TABLE </p></th>
-  <th colspan=4><p> POINT[1] <br> CURSOR </p></th>
- </tr>
-
- <tr>
-  <td><p> &middot; </p></td>
-  <td><p> &middot; </p></td>
-  <td colspan=2><p> Actual </p></td>
-  <td colspan=2><p> Optimal </p></td>
-  <td colspan=2><p> Actual </p></td>
-  <td colspan=2><p> Optimal </p></td>
- </tr>
- 
- <tr>
-  <td><p> &middot; </p></td>
-  <td><p> &middot; </p></td>
-  <td><p><span style='color: #fff'>000</span> x <span style='color: #fff'>000</span></p></td>
-  <td><p><span style='color: #fff'>000</span> y <span style='color: #fff'>000</span></p></td>
-  <td><p><span style='color: #fff'>000</span> x <span style='color: #fff'>000</span></p></td>
-  <td><p><span style='color: #fff'>000</span> y <span style='color: #fff'>000</span></p></td>
-  <td><p><span style='color: #fff'>000</span> x <span style='color: #fff'>000</span></p></td>
-  <td><p><span style='color: #fff'>000</span> y <span style='color: #fff'>000</span></p></td>
-  <td><p><span style='color: #fff'>000</span> x <span style='color: #fff'>000</span></p></td>
-  <td><p><span style='color: #fff'>000</span> y <span style='color: #fff'>000</span></p></td>
- </tr>
- 
- <tr>
-  <th rowspan=2><p> Allocation </p></th>
-  <th><p> A </p></th>
-  <td><p id='current-allocation-a-x-0'></p></td>
-  <td><p id='current-allocation-a-y-0'></p></td>
-  <td><p id='optimal-allocation-a-x-0'></p></td>
-  <td><p id='optimal-allocation-a-y-0'></p></td>
-  
-  <td><p id='current-allocation-a-x-1'></p></td>
-  <td><p id='current-allocation-a-y-1'></p></td>
-  <td><p id='optimal-allocation-a-x-1'></p></td>
-  <td><p id='optimal-allocation-a-y-1'></p></td>
- </tr>
-
- <tr>
-  <th><p> B </p></th>
-  <td><p id='current-allocation-b-x-0'></p></td>
-  <td><p id='current-allocation-b-y-0'></p></td>
-  <td><p id='optimal-allocation-b-x-0'></p></td>
-  <td><p id='optimal-allocation-b-y-0'></p></td>
-  
-  <td><p id='current-allocation-b-x-1'></p></td>
-  <td><p id='current-allocation-b-y-1'></p></td>
-  <td><p id='optimal-allocation-b-x-1'></p></td>
-  <td><p id='optimal-allocation-b-y-1'></p></td>
- </tr>
-
- <tr>
-  <th rowspan=2><p> Budget </p></th>
-  <th><p> A </p></th>
-  <td colspan=2><p id='current-budget-a-0'></p></td>
-  <td colspan=2><p id='optimal-budget-a-0'></p></td>
-  
-  <td colspan=2><p id='current-budget-a-1'></p></td>
-  <td colspan=2><p id='optimal-budget-a-1'></p></td>
- </tr>
- 
- <tr>
-  <th><p> B </p></th>
-  <td colspan=2><p id='current-budget-b-0'></p></td>
-  <td colspan=2><p id='optimal-budget-b-0'></p></td>
-  
-  <td colspan=2><p id='current-budget-b-1'></p></td>
-  <td colspan=2><p id='optimal-budget-b-1'></p></td>
- </tr>
-
- <tr>
-  <th rowspan=2><p> Utility </p></th>
-  <th><p> A </p></th>
-  <td colspan=2><p id='current-utility-a-0' style='font-size: 1.1em; color: #fc0; font-weight: 600;'></p></td>
-  <td colspan=2><p id='optimal-utility-a-0'></p></td>
-  
-  <td colspan=2><p id='current-utility-a-1' style='color: #000; font-weight: 450;'></p></td>
-  <td colspan=2><p id='optimal-utility-a-1'></p></td>
- </tr>
- 
- <tr>
-  <th><p> B </p></th>
-  <td colspan=2><p id='current-utility-b-0' style='font-size: 1.1em; color: #94b8b8; font-weight: 600;'></p></td>
-  <td colspan=2><p id='optimal-utility-b-0'></p></td>
-  
-  <td colspan=2><p id='current-utility-b-1' style='color: #000; font-weight: 450;'></p></td>
-  <td colspan=2><p id='optimal-utility-b-1'></p></td>
- </tr>
-
- <tr>
-  <th rowspan=2><p> MU </p></th>
-  <th><p> A </p></th>
-  <td><p id='current-mu-a-x-0'></p></td>
-  <td><p id='current-mu-a-y-0'></p></td>
-  <td><p id='optimal-mu-a-x-0'></p></td>
-  <td><p id='optimal-mu-a-y-0'></p></td>
-  
-  <td><p id='current-mu-a-x-1'></p></td>
-  <td><p id='current-mu-a-y-1'></p></td>
-  <td><p id='optimal-mu-a-x-1'></p></td>
-  <td><p id='optimal-mu-a-y-1'></p></td>
- </tr>
-
- <tr>
-  <th><p> B </p></th>
-  <td><p id='current-mu-b-x-0'></p></td>
-  <td><p id='current-mu-b-y-0'></p></td>
-  <td><p id='optimal-mu-b-x-0'></p></td>
-  <td><p id='optimal-mu-b-y-0'></p></td>
-  
-  <td><p id='current-mu-b-x-1'></p></td>
-  <td><p id='current-mu-b-y-1'></p></td>
-  <td><p id='optimal-mu-b-x-1'></p></td>
-  <td><p id='optimal-mu-b-y-1'></p></td>
- </tr>
- 
- <tr>
-  <th rowspan=2><p> MRS </p></th>
-  <th><p> A </p></th>
-  <td><p id='current-mrs-a-xy-0'></p></td>
-  <td><p id='current-mrs-a-yx-0'></p></td>
-  <td><p id='optimal-mrs-a-xy-0'></p></td>
-  <td><p id='optimal-mrs-a-yx-0'></p></td>
-  
-  <td><p id='current-mrs-a-xy-1'></p></td>
-  <td><p id='current-mrs-a-yx-1'></p></td>
-  <td><p id='optimal-mrs-a-xy-1'></p></td>
-  <td><p id='optimal-mrs-a-yx-1'></p></td>
- </tr>
-
- <tr>
-  <th><p> B </p></th>
-  <td><p id='current-mrs-b-xy-0'></p></td>
-  <td><p id='current-mrs-b-yx-0'></p></td>
-  <td><p id='optimal-mrs-b-xy-0'></p></td>
-  <td><p id='optimal-mrs-b-yx-0'></p></td>
-  
-  <td><p id='current-mrs-b-xy-1'></p></td>
-  <td><p id='current-mrs-b-yx-1'></p></td>
-  <td><p id='optimal-mrs-b-xy-1'></p></td>
-  <td><p id='optimal-mrs-b-yx-1'></p></td>
- </tr>
-
- 
- <tr>
-  <th rowspan=2><p> <span>Price of x</span> <br> <span>let P<sub>y</sub>=1</span></p></th>
-  <th><p> A </p></th>
-  <td rowspan=2 colspan=4><p id='price-x-0'></p></td>
-  <td rowspan=2 colspan=4><p id='price-x-1'></p></td>
- </tr>
- 
- <tr>
-  <th><p> B </p></th>
- </tr>
-
-<!-- add a modal as a popup -->
-
-
- <tr>
-  <th rowspan=2><p> MU / price </p><p> value for $ </p></th>
-  <th><p> A </p></th>
-  <td><p id='current-mu-price-a-x-0'></p></td>
-  <td><p id='current-mu-price-a-y-0'></p></td>
-  <td><p id='optimal-mu-price-a-x-0'></p></td>
-  <td><p id='optimal-mu-price-a-y-0'></p></td>
-  
-  <td><p id='current-mu-price-a-x-1'></p></td>
-  <td><p id='current-mu-price-a-y-1'></p></td>
-  <td><p id='optimal-mu-price-a-x-1'></p></td>
-  <td><p id='optimal-mu-price-a-y-1'></p></td>
- </tr>
-
- <tr>
-  <th><p> B </p></th>
-  <td><p id='current-mu-price-b-x-0'></p></td>
-  <td><p id='current-mu-price-b-y-0'></p></td>
-  <td><p id='optimal-mu-price-b-x-0'></p></td>
-  <td><p id='optimal-mu-price-b-y-0'></p></td>
-  
-  <td><p id='current-mu-price-b-x-1'></p></td>
-  <td><p id='current-mu-price-b-y-1'></p></td>
-  <td><p id='optimal-mu-price-b-x-1'></p></td>
-  <td><p id='optimal-mu-price-b-y-1'></p></td>
- </tr>
-
-</table>
-
-</div>
-
-<div class='sub-section3' id='container'></div>
-<script src='Box.js'></script>
-<script src='setup.js'></script>
-
-
-
-<div class='sub-section' id='infobox-container'>
-
-<div id='blurb'>
-<div class='section'>
- <p> Each person forms its own demand function. The sum equals market demand. Market supply is the total market endowment. Solving it gives us price and thus the budget line. </p>
- <p> These 2 make trades along the budget line. At a given point, <span class='inline-code'>mu.x/px</span> reports the amount of utility a person can buy for $1.</p>
- <p>If <span class='inline-code'>mu.x/px</span> &gt; <span class='inline-code'>mu.y/px</span>, it means that $1 spent on <span class='inline-code'>x</span> will provide more utility than $1 spent on <span class='inline-code'>y</span>.<p>
- <p> Such a person will probably want to sell <span class='inline-code'>k</span> units of <span class='inline-code'>y</span>, receive <span class='inline-code'>k&middot;py</span> money and purchase <span class='inline-code'>k&middot;py/px</span> units of <span class='inline-code'>x</span>.</p>
- <p> The trade cost is <span class='inline-code'>k&middot;mu.y</span> utility, but the gain is <span class='inline-code'>k&middot;(py/px)&middot;mu.x</span> utility.<p>
- <p> The contract curve is where <span class='inline-code'>amy.mrs</span> = <span class='inline-code'>mark.mrs</span> </p>
-
-
- <p> MU/price is the real driver of change. Obviously the MRSs are equal at equilibrium, but thats just a final result. while MU/prices are not equal, that impacts the market, and drives a change in price </p>
-
-  <!--
-    <p style='border-bottom: 1px solid #999'></p>
-    <p> Imagine you have 2 piles of things, but only care about the total number of things. </p>
-    <p> One pile has 300 blue things, which each cost $3.</p>
-    <p> The other pile has 200 red things and they cost $9. </p>
-    <p> So initially you have (300, 200) </p>
-    <p> But you can sell 1 red thing, receive $9, and buy 3 blue things. <p>
-    <p> And your allocation would be (303, 199) </p>
-    <p> another. at the given price, whats the change in u for making an incremental exchange along the budget line? </p>
-  -->
-
-</div>
-</div>
-</div>
-
-
-<script></script>
-
+</body>
 </html>
